@@ -9,7 +9,35 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('phone', 15)->nullable();
+            $table->text('address')->nullable();
+            $table->enum('gender', ['Nam', 'Nữ'])->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('avatar')->nullable();
+            $table->enum('role', ['admin', 'user'])->default('user');
+            $table->string('remember_token', 100)->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
+    }
+};
+ /*
+
+public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -37,13 +65,12 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+   
     public function down(): void
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
-};
+ 
+  */
