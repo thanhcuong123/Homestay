@@ -4,5 +4,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    return view('user/user_layout');
+    return view('admin/admin_layout');
 });
