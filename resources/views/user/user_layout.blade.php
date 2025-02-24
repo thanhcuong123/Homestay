@@ -32,11 +32,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto">
-                    <li class="nav-item active"><a class="nav-link" href="{{ route('home.html') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about.html') }}">About us</a>
+                    <li class="nav-item active"><a class="nav-link" href="{{ route('home.html') }}">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('about.html') }}">Về chúng tôi</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('list.html') }}">List</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('booking.html') }}">Booking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('list.html') }}">Danh sách Homestay</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('booking.html') }}">Đặt phòng</a></li>
                     {{-- <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li> --}}
                     {{-- <li class="nav-item submenu dropdown"> --}}
                         {{-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
@@ -46,8 +46,8 @@
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="elements.html">Elemests</a></li> --}}
-                    <li class="nav-item"><a class="nav-link" href="{{ route('contact.html') }}">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login.html') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('contact.html') }}">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login.html') }}">Đăng nhập</a></li>
                 </ul>
             </div>
         </nav>
@@ -61,8 +61,8 @@
             <div class="row">
                 <div class="col-lg-3  col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6 class="footer_title">About Agency</h6>
-                        <p>The world has become so fast paced that people don’t want to stand by reading a page of information, they would much rather look at a presentation and understand the message. It has come to a point </p>
+                        <h6 class="footer_title">Nhóm 6-TMĐL</h6>
+                        <p>Viết mô tả ở đây (nếu ngựa) </p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
@@ -120,19 +120,6 @@
                 </div>
             </div>
             <div class="border_line"></div>
-            <div class="row footer-bottom d-flex justify-content-between align-items-center">
-                <p class="col-lg-8 col-sm-12 footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>
-                        document.write(new Date().getFullYear());
-                    </script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                <div class="col-lg-4 col-sm-12 footer-social">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-dribbble"></i></a>
-                    <a href="#"><i class="fa fa-behance"></i></a>
-                </div>
-            </div>
         </div>
     </footer>
     <!--================ End footer Area  =================-->

@@ -32,6 +32,8 @@
         }
 
         .form-group {
+            display: flex;
+            flex-direction: column;
             margin-bottom: 20px;
             text-align: left;
         }
@@ -42,11 +44,17 @@
             color: #f8b100;
             font-weight: 500;
         }
+        .form-group a{
+            align-self: flex-end;
+            margin-top: 10px;
+            color: #f8b100;
+            font-size: 14px;
+        }
 
         .form-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #80cbc4;
+            border: 1px solid #794300;
             border-radius: 10px;
             box-sizing: border-box;
             font-size: 16px;
@@ -58,7 +66,7 @@
             border-color: #f8b100;
         }
 
-        .login-btn {
+        .login-btn, .return-btn {
             width: 100%;
             padding: 15px;
             background-color: #f8b100;
@@ -71,7 +79,7 @@
             margin-top: 10px;
         }
 
-        .login-btn:hover {
+        .login-btn:hover, .return-btn:hover {
             background-color: #f1daa1;
         }
 
@@ -103,6 +111,7 @@
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                <a href="#">Quên mật khẩu?</a>
             </div>
             @if ($errors->has('login_error'))
                 <div class="alert alert-danger">
@@ -110,6 +119,7 @@
                 </div>
             @endif
             <button type="submit" class="login-btn">Đăng nhập</button>
+            <button onclick="window.location.href='{{ route('home.html') }}'" class="return-btn">Trở về trang chủ</button>
         </form>
 
     </div>
