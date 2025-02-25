@@ -39,7 +39,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('booking.html') }}">Đặt phòng</a></li>
                     {{-- <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li> --}}
                     {{-- <li class="nav-item submenu dropdown"> --}}
-                        {{-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                    {{-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                         <ul class="dropdown-menu">
                             <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                             <li class="nav-item"><a class="nav-link" href="blog-single.html">Blog Details</a></li>
@@ -47,14 +47,15 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="elements.html">Elemests</a></li> --}}
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact.html') }}">Liên hệ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login.html') }}">Đăng nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('showFormlogin.html') }}">Đăng nhập</a></li>
                 </ul>
             </div>
         </nav>
     </div>
 </header>
+
 <body>
-  @yield('user_content')
+    @yield('user_content')
     <!--================ start footer Area  =================-->
     <footer class="footer-area section_gap">
         <div class="container">

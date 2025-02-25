@@ -4,25 +4,32 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+
 
 class UserController extends Controller
 {
-    public function about(){
-        return view ('user.about');
+    public function about()
+    {
+        return view('user.about');
     }
 
-    public function lists(){
+    public function lists()
+    {
         return view('user.lists');
     }
 
-    public function booking(){
+    public function booking()
+    {
         return view('user.booking');
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('user.contact');
     }
-    public function home(){
+    public function home()
+    {
         return view('user.index');
     }
 }

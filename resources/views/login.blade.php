@@ -44,7 +44,8 @@
             color: #f8b100;
             font-weight: 500;
         }
-        .form-group a{
+
+        .form-group a {
             align-self: flex-end;
             margin-top: 10px;
             color: #f8b100;
@@ -66,7 +67,8 @@
             border-color: #f8b100;
         }
 
-        .login-btn, .return-btn {
+        .login-btn,
+        .return-btn {
             width: 100%;
             padding: 15px;
             background-color: #f8b100;
@@ -79,7 +81,13 @@
             margin-top: 10px;
         }
 
-        .login-btn:hover, .return-btn:hover {
+        .return-btn {
+            width: 402px;
+        }
+
+
+        .login-btn:hover,
+        .return-btn:hover {
             background-color: #f1daa1;
         }
 
@@ -102,26 +110,39 @@
     <div class="login-container">
         <h2>Đăng nhập</h2>
 
-        {{-- <form action="{{ route('auth.login') }}" method="POST"> --}}
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="username">Tên đăng nhập:</label>
-                <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Nhập email" required>
+                @error('email')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
                 <a href="#">Quên mật khẩu?</a>
+                @error('password')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
+
             @if ($errors->has('login_error'))
-                <div class="alert alert-danger">
-                    {{ $errors->first('login_error') }}
-                </div>
+            <div class="alert alert-danger">
+                {{ $errors->first('login_error') }}
+            </div>
             @endif
+
             <button type="submit" class="login-btn">Đăng nhập</button>
-            <button onclick="window.location.href='{{ route('home.html') }}'" class="return-btn">Trở về trang chủ</button>
+
+        </form>
+        <form action="{{ route('home.html') }}" method="GET">
+
+            <button type="submit" class="return-btn">Thoát</button>
         </form>
 
+    </div>
     </div>
 </body>
 

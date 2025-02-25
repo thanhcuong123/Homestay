@@ -6,14 +6,43 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use  Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use HasFactory;
-    protected $fillable = ['name', 'email', 'password', 'phone', 'address', 'gender', 'date_of_birth', 'avatar', 'role', 'remember_token'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone',
+        'address',
+        'gender',
+        'date_of_birth',
+        'avatar',
+        'role'
+    ];
 
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value); // Mã hóa mật khẩu
+    }
+
+    // Kiểm tra quyền của user
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
     public function bookings()
     {
         return $this->hasMany(Booking::class);

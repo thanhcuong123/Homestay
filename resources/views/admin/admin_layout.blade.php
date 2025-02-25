@@ -5,8 +5,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Skydash Admin</title>
+    @yield('title-content')
+    <!-- <title>Skydash Admin</title> -->
     <!-- plugins:css -->
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Toastr JS -->
+
     <link rel="stylesheet" href="{{ asset('admin/vendors/feather/feather.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/vendors/css/vendor.bundle.base.css') }}">
@@ -221,14 +226,14 @@
             <!-- partial -->
 
 
-            <div class="main-panel">
-                Viết nội dung ở đây
-                @yield('maint-content')
+            <div class="main-panel overflow-auto">
+
+                @yield('main-content')
 
 
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
-                @include('admin.layouts.footer')
+                <!-- @include('admin.layouts.footer') -->
                 <!-- partial -->
             </div>
 
@@ -238,6 +243,8 @@
         <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- plugins:js -->
     <script src="{{ asset('admin/vendors/js/vendor.bundle.base.j') }}s"></script>
@@ -259,6 +266,19 @@
     <!-- Custom js for this page-->
     <script src="{{ asset('admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('admin/js/Chart.roundedBarCharts.js') }}"></script>
+
+    <script>
+        function showToast(message, type = "success") {
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: type === "success" ?
+                    "linear-gradient(to right, #00b09b, #96c93d)" : "linear-gradient(to right, #ff416c, #ff4b2b)",
+            }).showToast();
+        }
+    </script>
     <!-- End custom js for this page-->
 </body>
 
