@@ -11,7 +11,7 @@ class homestay extends Model
     use HasFactory;
 
     protected $table = 'homestays';
-    protected $fillable = ['owner_id', 'name', 'address', 'latitude', 'longitude', 'administrative_unit_id'];
+    protected $fillable = ['owner_id', 'name', 'address', 'latitude', 'longitude', 'administrative_unit_id', 'image'];
     protected $primaryKey = 'id';
     protected $dates = ['created_at', 'updated_at'];
     protected $dateFormat = 'Y-m-d H:i:s';

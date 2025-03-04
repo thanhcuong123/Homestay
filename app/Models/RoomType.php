@@ -15,7 +15,7 @@ class RoomType extends Model
     protected $primaryKey = 'id';
     protected $dates = ['created_at', 'updated_at'];
     protected $dateFormat = 'Y-m-d H:i:s';
-    protected $casts = ['amenities' => 'array'];
+    // protected $casts = ['amenities' => 'array'];
 
     public function homestay()
     {

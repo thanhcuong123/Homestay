@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->foreignId('administrative_unit_id')->nullable()->constrained('administrative_units')->onDelete('set null');
+            $table->string('image');
             $table->timestamps();
         });
     }

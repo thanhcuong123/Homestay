@@ -9,7 +9,7 @@ class TouristSpot extends Model
 {
     //
     use HasFactory;
-    protected $fillable = ['name', 'address', 'latitude', 'longitude', 'icon_id'];
+    protected $fillable = ['name', 'address', 'latitude', 'longitude', 'icon'];
 
     public function icon()
     {

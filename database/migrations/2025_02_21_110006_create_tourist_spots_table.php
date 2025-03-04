@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up()
     {
+        // Tạo bảng nếu chưa có
         Schema::create('tourist_spots', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('address');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
-            $table->foreignId('icon_id')->nullable()->constrained('icons')->onDelete('set null');
+            $table->string('icon')->nullable();
+
             $table->timestamps();
         });
+
+        // Thêm cột icon sau khi bảng đã được tạo
+
     }
 
     /**
@@ -27,6 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tourist_spots');
+        // Xóa cột icon trước
+
     }
 };

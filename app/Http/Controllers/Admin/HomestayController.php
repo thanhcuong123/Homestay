@@ -25,7 +25,6 @@ class HomestayController extends Controller
     }
     public function store(Request $request)
     {
-        // Kiểm tra dữ liệu đầu vào
         $request->validate([
             'owner_id' => 'required|exists:owners,id',
             'name' => 'required|string|max:255',
@@ -33,9 +32,29 @@ class HomestayController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'administrative_unit_id' => 'nullable|exists:administrative_units,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Lưu vào database
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            // dd($request->file('image'));
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+
+            // Kiểm tra xem file đã nhận chưa
+            if (!$image->isValid()) {
+                return back()->with('error', 'Lỗi tải lên hình ảnh');
+            }
+
+            $imagePath = $image->storeAs('uploads/homestay', $imageName, 'public');
+        }
+
+        // Kiểm tra đường dẫn ảnh
+        if (!$imagePath) {
+            return back()->with('error', 'Không thể lưu hình ảnh.');
+        }
+
         Homestay::create([
             'owner_id' => $request->owner_id,
             'name' => $request->name,
@@ -43,11 +62,12 @@ class HomestayController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'administrative_unit_id' => $request->administrative_unit_id,
+            'image' => $imagePath,
         ]);
 
-        // Chuyển hướng về danh sách homestay với thông báo thành công
         return redirect()->route('admin.homestay.index')->with('success', 'Thêm homestay thành công!');
     }
+
     public function edit($id)
     {
         $homestay = Homestay::findOrFail($id);
@@ -63,19 +83,79 @@ class HomestayController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'administrative_unit_id' => 'nullable|exists:administrative_units,id'
+            'administrative_unit_id' => 'nullable|exists:administrative_units,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $homestay = Homestay::findOrFail($id);
-        $homestay->update($request->all());
+
+        // Nếu có ảnh mới, lưu vào storage
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+
+            // Kiểm tra file hợp lệ
+            if (!$image->isValid()) {
+                return back()->with('error', 'Lỗi tải lên hình ảnh.');
+            }
+
+            // Lưu file vào storage
+            $imagePath = $image->storeAs('uploads/homestay', $imageName, 'public');
+
+            // Nếu lưu thành công, cập nhật ảnh mới
+            if ($imagePath) {
+                $homestay->image = $imagePath;
+            }
+        }
+
+        // Cập nhật các thông tin khác
+        $homestay->owner_id = $request->owner_id;
+        $homestay->name = $request->name;
+        $homestay->address = $request->address;
+        $homestay->latitude = $request->latitude;
+        $homestay->longitude = $request->longitude;
+        $homestay->administrative_unit_id = $request->administrative_unit_id;
+
+        $homestay->save();
 
         return redirect()->route('admin.homestay.index')->with('success', 'Cập nhật homestay thành công!');
     }
+
+
     public function destroy($id)
     {
         $homestay = Homestay::findOrFail($id);
         $homestay->delete();
 
         return redirect()->route('admin.homestay.index')->with('success', 'Xóa homestay thành công.');
+    }
+    public function showMap(Request $request)
+    {
+        $homestay = Homestay::where('latitude', $request->lat)
+            ->where('longitude', $request->lng)
+            ->firstOrFail();
+
+        return view('admin.homestay.map', [
+            'latitude' => $homestay->latitude,
+            'longitude' => $homestay->longitude,
+            'name' => $homestay->name,
+            'address' => $homestay->address,
+            'image' => $homestay->image
+        ]);
+    }
+    public function showMapall()
+    {
+
+        $homestays = Homestay::all()->map(function ($homestay) {
+            return [
+                'name' => $homestay->name,
+                'address' => $homestay->address,
+                'latitude' => $homestay->latitude,
+                'longitude' => $homestay->longitude,
+                'image' => asset('storage/' . $homestay->image),
+            ];
+        });
+
+        return view('admin.homestay.mapall', compact('homestays'));
     }
 }
