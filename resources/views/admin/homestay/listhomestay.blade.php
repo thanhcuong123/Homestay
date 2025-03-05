@@ -14,7 +14,7 @@
     } */
 
     .fixed-column {
-        width: 50px;
+        width: 500px;
     }
 
     .sticky-column {
@@ -61,7 +61,7 @@
                     <th>Stt</th>
                     <th>Chủ Homestay</th>
                     <th>Tên Homestay</th>
-                    <th class="fixed-column">Địa chỉ</th>
+                    <th class="fixed-column text-wrap">Địa chỉ</th>
                     <th>Vĩ độ</th>
                     <th>Kinh độ</th>
                     <th>Đơn vị hành chính</th>
@@ -78,7 +78,7 @@
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $homestay->owner->name ?? 'khong' }}</td>
                     <td>{{ $homestay->name }}</td>
-                    <td class="fixed-column">
+                    <td class="fixed-column text-wrap">
                         <div>{{ $homestay->address }}</div>
                     </td>
                     <td>{{ $homestay->latitude }}</td>
@@ -91,7 +91,7 @@
                         @endif
                     </td>
 
-                    <td class="sticky-column">
+                    <td class="sticky-column ">
                         <a href="{{ route('admin.homestay.edit',['id' => $homestay ->id]) }}" class="btn btn-warning btn-sm">Sửa</a>
                         <form action="{{ route('admin.homestay.destroy',$homestay -> id) }}" method="POST" style="display:inline;">
                             @csrf

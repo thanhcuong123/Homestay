@@ -7,7 +7,7 @@
 @section('main-content')
 <div class="container mt-4">
     <h2>Bản đồ Homestay & Điểm Du Lịch</h2>
-    <div id="map" style="height: 600px;"></div>
+    <div id="map" style="height: 600px; width:100%;"></div>
 </div>
 
 <!-- Lưu dữ liệu vào thẻ div ẩn -->
