@@ -28,7 +28,6 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-
         Log::info('Thử đăng nhập với email: ' . $request->email);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
