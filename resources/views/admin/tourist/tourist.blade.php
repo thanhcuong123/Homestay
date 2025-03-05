@@ -4,12 +4,14 @@
 @endsection
 
 @section('main-content')
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <div class="table-responsive">
     <div class="containers mt-4">
         <div class="d-flex justify-content align-items-center mb-3">
             <h3 class="mb-1">Danh sách Homestay</h3>
             <a href="{{ route('tourist.create') }}" class="btn btn-success" style="margin-left:4px">Thêm mới</a>
-            <a href="#" class="btn btn-primary">Xem các Homestay trên bản đồ</a>
+            <a href="{{ route('tourist.mapall') }}" class="btn btn-primary">Xem các điểm du lịch trên bản đồ</a>
 
         </div>
         <h6>Nhấn đúp chuột để chọn xem vị trí trên map của các điểm du lịch</h6>
@@ -48,10 +50,10 @@
                     </td>
                     <td>{{ $tourist->latitude }}</td>
                     <td>{{ $tourist->longitude }}</td>
-                    <td>@if($tourist->image)
-                        <img src="{{ asset('storage/' . $tourist->icon) }}" alt="{{ $homestay->name }}" width="1100" height="70" style="border-radius: 8px;">
+                    <td>@if($tourist->icon)
+                        <img src="{{ asset('storage/' . $tourist->icon) }}" alt="{{ $tourist->name }}" width="1100" height="70" style="border-radius: 8px;">
                         @else
-                        <span>Không có ảnh</span>
+                        <span>Chưa cập nhật</span>
                         @endif
                     </td>
                     <td class="sticky-column">
@@ -70,7 +72,7 @@
             function redirectToMap(row) {
                 var lat = row.getAttribute("data-lat") || 0;
                 var lng = row.getAttribute("data-lng") || 0;
-                // window.location.href = "/admin/homestay/map?lat=" + lat + "&lng=" + lng;
+                window.location.href = "/admin/tourist/map?lat=" + lat + "&lng=" + lng;
             }
         </script>
 

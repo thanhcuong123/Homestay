@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\OwnerController;
 use Illuminate\Support\Facades\View;
 use App\Http\controllers\Admin\Roomcontroller;
 use App\Http\controllers\Admin\TourisSpotsController;
-
+use App\Http\controllers\Admin\MapController;
 
 Route::get('/', function () {
 
@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
 // Route cho admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
-
+    //homestay
     Route::get('/admin/homestay', [HomestayController::class, 'index'])->name('admin.homestay.index');
     Route::get('/admin/homestay/create', [HomestayController::class, 'create'])->name('admin.homestay.create');
     Route::post('/admin/homestay/store', [HomestayController::class, 'store'])->name('admin.homestay.store');
@@ -79,12 +79,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/room/update/{id}', [Roomcontroller::class, 'update'])->name('room.update');
     Route::delete('admin/rooom/destroy/{id}', [Roomcontroller::class, 'destroy'])->name('rooms.destroy');
     //touris_spot
-    Route::get('admin/touris', [TourisSpotsController::class, 'index'])->name('tourist.index');
+    Route::get('admin/tourist', [TourisSpotsController::class, 'index'])->name('tourist.index');
     Route::get('/admin/tourist/create', [TourisSpotsController::class, 'create'])->name('tourist.create');
-    Route::post('/admin/touris/store', [TourisSpotsController::class, 'store'])->name('tourist.store');
+    Route::post('/admin/tourist/store', [TourisSpotsController::class, 'store'])->name('tourist.store');
     Route::delete('/admin/tourist/destroy/{id}', [TourisSpotsController::class, 'destroy'])->name('tourist.destroy');
     Route::get('/admin/tourist/edit{id}', [TourisSpotsController::class, 'edit'])->name('tourist.edit');
     Route::put('/admin/tourist/update/{id}', [TourisSpotsController::class, 'update'])->name('tourist.update');
+    Route::get('/admin/tourist/map', [TourisSpotsController::class, 'showMap'])->name('tourist.map');
+    Route::get('/admin/tourist/mapall', [TourisSpotsController::class, 'mapall'])->name('tourist.mapall');
+    //map
+    Route::get('/admin/mapall', [MapController::class, 'showAllLocations'])->name('mapall');
+    Route::get('/map/distance/{homestayId}/{touristId}', [MapController::class, 'calculateDistance']);
 });
 
 
