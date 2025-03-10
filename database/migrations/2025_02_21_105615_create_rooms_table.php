@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
             $table->string('room_number', 50);
-            $table->enum('status', ['đã có người ở', 'đã đặt', 'còn trống']);
+            $table->text('status');
             $table->timestamps();
         });
     }

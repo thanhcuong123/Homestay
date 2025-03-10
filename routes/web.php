@@ -5,11 +5,13 @@ use App\Http\Controllers\Admin\RoomtypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\Admin\OwnerController;
 use Illuminate\Support\Facades\View;
 use App\Http\controllers\Admin\Roomcontroller;
 use App\Http\controllers\Admin\TourisSpotsController;
 use App\Http\controllers\Admin\MapController;
+
 
 Route::get('/', function () {
 
@@ -23,25 +25,20 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-// Use vieets trong đây nhe 
+// Use vieets trong đây nhe
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('user.index');
     })->name('userindex');
     //home
     Route::get('/home', [UserController::class, 'home'])->name('home.html');
-    //about us
-    Route::get('/about', [UserController::class, 'about'])->name('about.html');
-
     //lists
     route::get('/lists', [UserController::class, 'lists'])->name('list.html');
 
-    //booking
-    route::get('/booking', [UserController::class, 'booking'])->name('booking.html');
-
-    //contact
-    route::get('/contact', [UserController::class, 'contact'])->name('contact.html');
 });
+
+    //Search
+    Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
 
 // Route cho admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -71,7 +68,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/roomtype/edit/{id}', [RoomtypeController::class, 'edit'])->name('roomtype.edit');
     Route::put('/admin/roomtype/update/{id}', [RoomtypeController::class, 'update'])->name('roomtype.update');
     Route::delete('/admin/roomtype/{id}', [RoomtypeController::class, 'destroy'])->name('roomtype.destroy');
-    // room 
+    // room
     Route::get('/admin/room', [Roomcontroller::class, 'index'])->name('admin.room.index');
     Route::get('/admin/room/create', [Roomcontroller::class, 'create'])->name('room.create');
     Route::post('/admin/room/store', [Roomcontroller::class, 'store'])->name('room.store');
