@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class homestay extends Model
+class Homestay extends Model
 {
     //
     use HasFactory;

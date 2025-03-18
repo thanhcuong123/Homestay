@@ -121,4 +121,17 @@ class TourisSpotsController extends Controller
 
         return view('admin.tourist.mapall', compact('tourist'));
     }
+    public function destroy($id)
+    {
+        $tourist = TouristSpot::findOrFail($id);
+
+        // Xóa hình ảnh nếu có
+        if ($tourist->icon) {
+            Storage::delete('public/' . $tourist->icon);
+        }
+
+        $tourist->delete();
+
+        return redirect()->route('tourist.index')->with('success', 'Đã xóa điểm du lịch thành công!');
+    }
 }

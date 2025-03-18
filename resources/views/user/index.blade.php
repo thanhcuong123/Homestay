@@ -31,9 +31,16 @@
                 <p>Map sẽ hiện ở đây.</p>
             </div>
         </div> --}}
+        <div id="map-data"
+            data-homestays='@json($homestays)'
+            data-tourist-spots='@json($touristSpots)'>
+        </div>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
     </div>
     <script src="{{ asset('user/js/search.js') }}"></script>
     <script src="{{ asset('user/js/info_homestay.js') }}"></script>
+    <script src="{{ asset('system/script.js')}}"></script>
 
 </body>
 

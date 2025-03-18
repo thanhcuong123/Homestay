@@ -11,12 +11,12 @@ use App\Http\Controllers\Admin\OwnerController;
 use Illuminate\Support\Facades\View;
 use App\Http\controllers\Admin\Roomcontroller;
 use App\Http\controllers\Admin\TourisSpotsController;
-use App\Http\controllers\Admin\MapController;
-
+// use App\Http\controllers\Admin\MapController;
+use App\Http\Controllers\User\MapController;
 
 Route::get('/', function () {
 
-    return view('user.index');
+    return view('login');
 });
 
 
@@ -35,11 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('home.html');
     //lists
     route::get('/lists', [UserController::class, 'lists'])->name('list.html');
-    });
-    //Search
-    Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
-    //Thông tin homestay khi xem chi tiết
-    Route::get('/homestay/{id}', [GetInfoHomestayController::class, 'getHomestayDetails'])->name('getHomestayDetails');
+    Route::get('/mapall', [MapController::class, 'showAllLocations'])->name('mapall');
+    Route::get('/distance/{homestayId}/{touristId}', [MapController::class, 'calculateDistance']);
+});
+Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
+//Thông tin homestay khi xem chi tiết
+Route::get('/homestay/{id}', [GetInfoHomestayController::class, 'getHomestayDetails'])->name('getHomestayDetails');
+
+//Search
 
 
 // Route cho admin
@@ -87,8 +90,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/tourist/map', [TourisSpotsController::class, 'showMap'])->name('tourist.map');
     Route::get('/admin/tourist/mapall', [TourisSpotsController::class, 'mapall'])->name('tourist.mapall');
     //map
-    Route::get('/admin/mapall', [MapController::class, 'showAllLocations'])->name('mapall');
-    Route::get('/map/distance/{homestayId}/{touristId}', [MapController::class, 'calculateDistance']);
+    // Route::get('/admin/mapall', [MapController::class, 'showAllLocations'])->name('mapall');
+    // Route::get('/map/distance/{homestayId}/{touristId}', [MapController::class, 'calculateDistance']);
 });
 
 

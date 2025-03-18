@@ -4,19 +4,13 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use App\Models\homestay;
 use App\Models\TouristSpot;
 
-
-class UserController extends Controller
+class MapController extends Controller
 {
-    public function lists()
-    {
-        return view('user.lists');
-    }
-
-    public function home()
+    //
+    public function showAllLocations()
     {
         $homestays = Homestay::select('name', 'latitude', 'longitude', 'address', 'image')
             ->get()
@@ -27,7 +21,6 @@ class UserController extends Controller
                 }
                 return $homestay;
             });
-        // dd($homestays); // Kiểm tra dữ liệu
 
         $touristSpots = TouristSpot::select('name', 'latitude', 'longitude', 'address', 'icon')
             ->get()
@@ -37,8 +30,25 @@ class UserController extends Controller
                 }
                 return $tourist;
             });
-        // dd($homestays, $touristSpots); // Debug dữ liệu
 
         return view('user.index', compact('homestays', 'touristSpots'));
+    }
+    public function calculateDistance($homestayId, $touristId)
+    {
+        $homestay = Homestay::findOrFail($homestayId);
+        $tourist = TouristSpot::findOrFail($touristId);
+
+        return response()->json([
+            'homestay' => [
+                'name' => $homestay->name,
+                'latitude' => $homestay->latitude,
+                'longitude' => $homestay->longitude
+            ],
+            'tourist' => [
+                'name' => $tourist->name,
+                'latitude' => $tourist->latitude,
+                'longitude' => $tourist->longitude
+            ]
+        ]);
     }
 }
