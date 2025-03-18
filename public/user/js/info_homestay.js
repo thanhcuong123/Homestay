@@ -8,24 +8,55 @@ function viewHomestayDetails(homestayId) {
 
             const titleElement = document.getElementById('homestayTitle');
             const infoElement = document.getElementById('homestayInfo');
+            const roomsElement = document.getElementById('homestayRooms');
+            const reviewsElement = document.getElementById('homestayReviews');
+            const overlay = document.getElementById('homestayDetailOverlay');
+            const popup = document.getElementById('homestayDetailPopup');
 
-            if (!titleElement || !infoElement) {
+            if (!titleElement || !infoElement || !roomsElement || !reviewsElement || !overlay || !popup) {
                 console.error("⛔ Không tìm thấy phần tử hiển thị thông tin homestay!");
                 return;
             }
 
+            // ✅ Tab Thông tin
             titleElement.innerText = homestay.name;
             infoElement.innerHTML = `
-                <img src="${homestay.image}" alt="Hình ảnh Homestay" style="width:100%; border-radius: 10px;">
+                <img src="${homestay.image}" alt="Hình ảnh Homestay" style="width:100%;">
                 <p><strong>Địa chỉ:</strong> ${homestay.address}</p>
                 <p><strong>Chủ nhà:</strong> ${homestay.owner.name} (${homestay.owner.phone})</p>
+                <button>Xem đường đi</button>
             `;
 
+            // ✅ Tab Loại phòng
+            if (Array.isArray(homestay.rooms) && homestay.rooms.length > 0) {
+                roomsElement.innerHTML = homestay.rooms.map(room => `
+                    <div class="room">
+                        <h4>${room.name} - ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${room.max_guests}</p>
+                        <p><strong>Diện tích:</strong> ${room.area} m²</p>
+                        <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
+                    </div>
+                `).join('<hr>');
+            } else {
+                roomsElement.innerHTML = "<p>Không có thông tin về phòng.</p>";
+            }
+            // ✅ Tab Đánh giá
+            if (Array.isArray(homestay.reviews) && homestay.reviews.length > 0) {
+                reviewsElement.innerHTML = homestay.reviews.map(review => `
+                    <div class="review">
+                        <p><strong>${review.user}</strong> (${review.rating}⭐)</p>
+                        <p>${review.comment}</p>
+                    </div>
+                `).join('<hr>');
+            } else {
+                reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+            }
+
             console.log("🔥 Đang hiển thị popup...");
-            document.getElementById('homestayDetailPopup').style.display = "block";
-            document.getElementById('homestayDetailOverlay').style.display = "block";
-            document.getElementById('homestayDetailPopup').style.bottom = "10%";
-            document.getElementById('homestayDetailPopup').style.opacity = "1";
+
+            // Hiển thị popup và overlay
+            overlay.classList.add('active');
+            popup.classList.add('active');
             document.body.classList.add('show-popup');
 
             console.log("🎉 Popup đã mở!");
@@ -33,14 +64,19 @@ function viewHomestayDetails(homestayId) {
         .catch(error => console.error('Lỗi khi lấy dữ liệu:', error));
 }
 
+
 // Hàm đóng popup
 function closeHomestayPopup() {
     console.log("Đóng popup");
 
-    document.getElementById("homestayDetailPopup").style.display = "none";
-    document.getElementById("homestayDetailOverlay").style.display = "none";
+    const overlay = document.getElementById('homestayDetailOverlay');
+    const popup = document.getElementById('homestayDetailPopup');
 
-    // Xóa class để reset trạng thái
+    if (overlay && popup) {
+        overlay.classList.remove('active');
+        popup.classList.remove('active');
+    }
+
     document.body.classList.remove('show-popup');
 }
 

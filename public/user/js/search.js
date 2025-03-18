@@ -43,30 +43,8 @@ function showResultsPopup(results) {
                 console.error("Lỗi: ID không tồn tại");
                 return;
             }
-
-            console.log("Đang mở popup cho Homestay ID:", id);
-
-            fetch(`/homestay/${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert("Lỗi: " + data.error);
-                        return;
-                    }
-
-                    // Cập nhật thông tin trong popup
-                    document.getElementById("homestayTitle").innerText = data.name;
-                    document.getElementById("homestayInfo").innerHTML = `
-                        <p>Địa chỉ: ${data.address}</p>
-                        <p>Chủ nhà: ${data.owner.name}</p>
-                        <img src="${data.image}" width="200">
-                    `;
-
-                    // Hiển thị popup
-                    document.getElementById("homestayDetailOverlay").style.display = "block";
-                    document.getElementById("homestayDetailPopup").style.display = "block";
-                })
-                .catch(error => console.error("Lỗi:", error));
+            console.log("📌 Đang hiển thị popup với dữ liệu có sẵn cho Homestay ID:", id);
+            viewHomestayDetails(id);
         });
     });
 }

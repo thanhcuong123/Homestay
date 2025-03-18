@@ -1,5 +1,4 @@
 /* Overlay background */
-#overlay,
 #homestayDetailOverlay {
     position: fixed;
     top: 0;
@@ -13,7 +12,6 @@
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-#overlay.active,
 #homestayDetailOverlay.active {
     visibility: visible;
     opacity: 1;
@@ -21,51 +19,50 @@
 
 /* Popup container */
 #homestayDetailPopup {
-    display: none;
-    /* Ban đầu ẩn */
     position: fixed;
     bottom: -100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 50%);
     width: 90%;
     max-width: 500px;
     background: white;
-    transition: bottom 0.3s ease-in-out, opacity 0.3s;
+    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
     z-index: 10002;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     opacity: 0;
+    visibility: hidden;
 }
 
-.show-popup #homestayDetailPopup {
-    bottom: 10%;
+/* Khi hiển thị popup */
+#homestayDetailPopup.active {
+    bottom: auto;
+    top: 50%;
+    transform: translate(-50%, -50%);
     opacity: 1;
-    display: block !important;
-}
-
-.show-popup #homestayDetailOverlay {
     visibility: visible;
-    opacity: 1;
 }
 
+/* Nội dung popup */
 .popup-content {
     position: relative;
 }
 
 #homestayDetailPopup h2 {
     margin-top: 0;
-    font-size: 24px;
+    font-size: 22px;
     color: #ff7b00;
     text-align: center;
 }
 
+/* Nút đóng */
 .close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 22px;
     color: #ff4d4d;
     font-weight: bold;
     transition: color 0.2s ease;
@@ -75,13 +72,7 @@
     color: #ff0000;
 }
 
-#homestayDetails {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 10px;
-    border-top: 1px solid #ff7b00;
-}
-
+/* Tab */
 .tab-buttons {
     display: flex;
     justify-content: space-around;
@@ -91,11 +82,11 @@
 
 .tab-buttons button {
     flex: 1;
-    padding: 10px;
+    padding: 8px;
     background: #ff7b00;
     border: none;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: background 0.3s;
 }
@@ -105,11 +96,20 @@
     background: #ff4d00;
 }
 
+/* Nội dung tab */
 .tab-content {
     display: none;
     padding: 15px;
+    text-align: start;
 }
 
 .tab-content.active {
     display: block;
+}
+
+.homestay-image {
+    width: 100%;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
 }
