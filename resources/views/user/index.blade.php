@@ -15,8 +15,8 @@
         <div class="search-box">
             <form id="searchForm" action="{{ route('searchHomestay') }}" method="GET">
                 <input type="text" id="search" name="query" placeholder="Tên HS hoặc chủ HS">
-                <input type="number" name="max_guests" placeholder="Số người ở">
-                <input type="number" name="max_price" placeholder="Giá">
+                <!-- <input type="number" name="max_guests" placeholder="Số người ở">
+                <input type="number" name="max_price" placeholder="Giá"> -->
                 <button type="submit">Tìm kiếm</button>
             </form>
         </div>
