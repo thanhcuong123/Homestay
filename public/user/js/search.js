@@ -26,9 +26,7 @@ function showResultsPopup(results) {
                     <h3>${homestay.name}</h3>
                     <p>Địa chỉ: ${homestay.address}</p>
                     <p>Chủ nhà: ${homestay.owner.name} (${homestay.owner.phone})</p>
-                    <button onclick="viewHomestayDetails(${homestay.id})">
-                        Xem chi tiết
-                    </button>
+                    <button class="xem-chi-tiet" data-id="${homestay.id}">Xem chi tiết</button>
                     <hr>
                 </div>
             `;
@@ -37,6 +35,40 @@ function showResultsPopup(results) {
 
     document.getElementById('overlay').style.display = 'block';
     document.getElementById('resultsPopup').style.display = 'block';
+
+    document.querySelectorAll(".xem-chi-tiet").forEach(button => {
+        button.addEventListener("click", function () {
+            let id = this.dataset.id;
+            if (!id) {
+                console.error("Lỗi: ID không tồn tại");
+                return;
+            }
+
+            console.log("Đang mở popup cho Homestay ID:", id);
+
+            fetch(`/homestay/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert("Lỗi: " + data.error);
+                        return;
+                    }
+
+                    // Cập nhật thông tin trong popup
+                    document.getElementById("homestayTitle").innerText = data.name;
+                    document.getElementById("homestayInfo").innerHTML = `
+                        <p>Địa chỉ: ${data.address}</p>
+                        <p>Chủ nhà: ${data.owner.name}</p>
+                        <img src="${data.image}" width="200">
+                    `;
+
+                    // Hiển thị popup
+                    document.getElementById("homestayDetailOverlay").style.display = "block";
+                    document.getElementById("homestayDetailPopup").style.display = "block";
+                })
+                .catch(error => console.error("Lỗi:", error));
+        });
+    });
 }
 
 function closePopup() {

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('user/css/main.css') }}">
-    <title>Homestay</title>
+    <link rel="stylesheet" href="{{ asset('user/css/info_homestay.css') }}">
+    <title> Homestay</title>
 </head>
 
 <body>
@@ -32,6 +33,8 @@
         </div> --}}
     </div>
     <script src="{{ asset('user/js/search.js') }}"></script>
+    <script src="{{ asset('user/js/info_homestay.js') }}"></script>
+
 </body>
 
 </html>

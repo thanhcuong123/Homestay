@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\HomestayController;
 use App\Http\Controllers\Admin\RoomtypeController;
+use App\Http\Controllers\User\GetInfoHomestayController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
@@ -15,7 +16,7 @@ use App\Http\controllers\Admin\MapController;
 
 Route::get('/', function () {
 
-    return view('user/user_layout');
+    return view('user.index');
 });
 
 
@@ -34,11 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('home.html');
     //lists
     route::get('/lists', [UserController::class, 'lists'])->name('list.html');
-
-});
-
+    });
     //Search
     Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
+    //Thông tin homestay khi xem chi tiết
+    Route::get('/homestay/{id}', [GetInfoHomestayController::class, 'getHomestayDetails'])->name('getHomestayDetails');
+
 
 // Route cho admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
