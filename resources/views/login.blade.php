@@ -138,7 +138,6 @@
 
         </form>
         <form action="{{ route('home.html') }}" method="GET">
-
             <button type="submit" class="return-btn">Thoát</button>
         </form>
 

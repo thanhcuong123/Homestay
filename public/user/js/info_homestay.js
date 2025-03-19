@@ -24,7 +24,13 @@ function viewHomestayDetails(homestayId) {
                 <img src="${homestay.image}" alt="Hình ảnh Homestay" style="width:100%;">
                 <p><strong>Địa chỉ:</strong> ${homestay.address}</p>
                 <p><strong>Chủ nhà:</strong> ${homestay.owner.name} (${homestay.owner.phone})</p>
-                <button>Xem đường đi</button>
+                <button
+                class="xem-duong-di"
+                style="Text-decoration: none;
+                        padding: 5px 10px;
+                        background: #f8b100;
+                        color: #fff;
+                        border-radius: 5px;">Xem đường đi</button>
             `;
 
             // ✅ Tab Loại phòng
@@ -51,6 +57,8 @@ function viewHomestayDetails(homestayId) {
             } else {
                 reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
             }
+            // Tab du lịch
+
 
             console.log("🔥 Đang hiển thị popup...");
 

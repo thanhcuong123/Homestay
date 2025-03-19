@@ -21,16 +21,22 @@
             </form>
         </div>
         <div class="login-link">
-            <a href="{{ route('login') }}">Đăng nhập</a>
+            @if(Auth::check())
+                <span><strong>Xin chào, {{ Auth::user()->name }}!</strong> </span>
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Đăng xuất
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @else
+                <a href="{{ route('login') }}">Đăng nhập</a>
+            @endif
         </div>
 
         @include('user.popup_search')
 
-        {{-- <div id="mapContainer">
-            <div id="map">
-                <p>Map sẽ hiện ở đây.</p>
-            </div>
-        </div> --}}
         <div id="map-data"
             data-homestays='@json($homestays)'
             data-tourist-spots='@json($touristSpots)'>

@@ -26,7 +26,13 @@ function showResultsPopup(results) {
                     <h3>${homestay.name}</h3>
                     <p>Địa chỉ: ${homestay.address}</p>
                     <p>Chủ nhà: ${homestay.owner.name} (${homestay.owner.phone})</p>
-                    <button class="xem-chi-tiet" data-id="${homestay.id}">Xem chi tiết</button>
+                    <button class="xem-chi-tiet" data-id="${homestay.id}"
+                    style = "Text-decoration: none;
+                        padding: 5px 10px;
+                        background: #f8b100;
+                        color: #fff;
+                        border-radius: 5px;">
+                        Xem chi tiết</button>
                     <hr>
                 </div>
             `;

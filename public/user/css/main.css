@@ -33,6 +33,7 @@ body {
     z-index: 1000;
 }
 
+.search-box button,
 .login-link a {
     text-decoration: none;
     padding: 10px 15px;
@@ -41,6 +42,7 @@ body {
     border-radius: 5px;
 }
 
+.search-box button,
 .login-link a:hover {
     background: #f1a600;
 }
