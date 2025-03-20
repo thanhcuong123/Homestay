@@ -22,31 +22,28 @@
         </div>
         <div class="login-link">
             @if(Auth::check())
-                <span><strong>Xin chào, {{ Auth::user()->name }}!</strong> </span>
-                <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Đăng xuất
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+            <span><strong>Xin chào, {{ Auth::user()->name }}!</strong> </span>
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Đăng xuất
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
             @else
-                <a href="{{ route('login') }}">Đăng nhập</a>
+            <a href="{{ route('login') }}">Đăng nhập</a>
             @endif
         </div>
 
         @include('user.popup_search')
-
-        <div id="map-data"
-            data-homestays='@json($homestays)'
-            data-tourist-spots='@json($touristSpots)'>
+        <div id="map-data">
         </div>
         <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
     </div>
     <script src="{{ asset('user/js/search.js') }}"></script>
     <script src="{{ asset('user/js/info_homestay.js') }}"></script>
-    <script src="{{ asset('system/script.js')}}"></script>
+    <!-- <script src="{{ asset('system/script.js')}}"></script> -->
 
 </body>
 
