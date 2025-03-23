@@ -7,14 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('user/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/info_homestay.css') }}">
-    <title> Homestay</title>
+    <title>Homestay</title>
 </head>
 
 <body>
     <div id="map">
         <div class="search-box">
             <form id="searchForm" action="{{ route('searchHomestay') }}" method="GET">
-                <input type="text" id="search" name="query" placeholder="Tên HS hoặc chủ HS">
+                <input type="text" id="search" name="query" placeholder="Tìm kiếm">
                 <!-- <input type="number" name="max_guests" placeholder="Số người ở">
                 <input type="number" name="max_price" placeholder="Giá"> -->
                 <button type="submit">Tìm kiếm</button>
@@ -43,6 +43,7 @@
     </div>
     <script src="{{ asset('user/js/search.js') }}"></script>
     <script src="{{ asset('user/js/info_homestay.js') }}"></script>
+    <script src="{{ asset('user/js/route.js') }}" ></script>
     <!-- <script src="{{ asset('system/script.js')}}"></script> -->
 
 </body>

@@ -20,3 +20,6 @@
         <div id="homestayTourist" class="tab-content"></div>
     </div>
 </div>
+
+@include('user.popup_route')
+<script src="{{ asset('user/js/route.js') }}" ></script>

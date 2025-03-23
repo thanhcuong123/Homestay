@@ -33,14 +33,25 @@ function viewHomestayDetails(homestayId) {
                 <img src="${homestay.image}" alt="Hình ảnh Homestay" style="width:100%;">
                 <p><strong>Địa chỉ:</strong> ${homestay.address}</p>
                 <p><strong>Chủ nhà:</strong> ${homestay.owner.name} (${homestay.owner.phone})</p>
-                <button
-                class="xem-duong-di"
-                style="Text-decoration: none;
+                <button class="xem-duong-di"
+                    data-lat="${homestay.latitude}"
+                    data-lon="${homestay.longitude}"
+                    style="text-decoration: none;
                         padding: 5px 10px;
                         background: #f8b100;
                         color: #fff;
-                        border-radius: 5px;">Xem đường đi</button>
+                        border-radius: 5px;">
+                    Xem đường đi
+                </button>
             `;
+
+            //chuyển hướng xem đường đi
+            document.querySelector(".xem-duong-di").addEventListener("click", function () {
+                let lat = this.dataset.lat;
+                let lon = this.dataset.lon;
+                console.log("🌍 Đang hiển thị popup xem đường đi:", lat, lon);
+                openRoutePopup(lat, lon);
+            });
 
             // ✅ Tab Loại phòng
             if (Array.isArray(homestay.rooms) && homestay.rooms.length > 0) {
@@ -48,12 +59,10 @@ function viewHomestayDetails(homestayId) {
                     .map(
                         (room) => `
                     <div class="room">
-                        <h4>${
-                            room.name
-                        } - ${room.price.toLocaleString()} VND</h4>
-                        <p><strong>Số người tối đa:</strong> ${
-                            room.max_guests
-                        }</p>
+                        <h4>${room.name
+                            } - ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${room.max_guests
+                            }</p>
                         <p><strong>Diện tích:</strong> ${room.area} m²</p>
                         <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
                     </div>

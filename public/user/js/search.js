@@ -116,7 +116,7 @@ function showResultsPopup(results) {
                 return;
             }
             console.log(
-                "📌 Đang hiển thị popup với dữ liệu có sẵn cho Homestay ID:",
+                " Đang hiển thị popup với dữ liệu có sẵn cho Homestay ID:",
                 id
             );
             viewHomestayDetails(id);
