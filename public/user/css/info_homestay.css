@@ -23,10 +23,12 @@
     bottom: -100%;
     left: 50%;
     transform: translate(-50%, 50%);
-    width: 90%;
+    width: 500px;
+    height: 700px;
     max-width: 500px;
     background: white;
-    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out,
+        visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
     z-index: 10002;
     padding: 20px;
     border-radius: 10px;

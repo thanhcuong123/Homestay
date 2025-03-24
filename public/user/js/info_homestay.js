@@ -46,12 +46,18 @@ function viewHomestayDetails(homestayId) {
             `;
 
             //chuyển hướng xem đường đi
-            document.querySelector(".xem-duong-di").addEventListener("click", function () {
-                let lat = this.dataset.lat;
-                let lon = this.dataset.lon;
-                console.log("🌍 Đang hiển thị popup xem đường đi:", lat, lon);
-                openRoutePopup(lat, lon);
-            });
+            document
+                .querySelector(".xem-duong-di")
+                .addEventListener("click", function () {
+                    let lat = this.dataset.lat;
+                    let lon = this.dataset.lon;
+                    console.log(
+                        "🌍 Đang hiển thị popup xem đường đi:",
+                        lat,
+                        lon
+                    );
+                    openRoutePopup(lat, lon);
+                });
 
             // ✅ Tab Loại phòng
             if (Array.isArray(homestay.rooms) && homestay.rooms.length > 0) {
@@ -59,10 +65,12 @@ function viewHomestayDetails(homestayId) {
                     .map(
                         (room) => `
                     <div class="room">
-                        <h4>${room.name
-                            } - ${room.price.toLocaleString()} VND</h4>
-                        <p><strong>Số người tối đa:</strong> ${room.max_guests
-                            }</p>
+                        <h4>${
+                            room.name
+                        } - giá phòng ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${
+                            room.max_guests
+                        } người</p>
                         <p><strong>Diện tích:</strong> ${room.area} m²</p>
                         <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
                     </div>
