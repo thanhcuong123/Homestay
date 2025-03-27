@@ -80,23 +80,9 @@ function viewHomestayDetails(homestayId) {
                 roomsElement.innerHTML = "<p>Không có thông tin về phòng.</p>";
             }
             // ✅ Tab Đánh giá
-            if (
-                Array.isArray(homestay.reviews) &&
-                homestay.reviews.length > 0
-            ) {
-                reviewsElement.innerHTML = homestay.reviews
-                    .map(
-                        (review) => `
-                    <div class="review">
-                        <p><strong>${review.user}</strong> (${review.rating}⭐)</p>
-                        <p>${review.comment}</p>
-                    </div>
-                `
-                    )
-                    .join("<hr>");
-            } else {
-                reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
-            }
+            //js đánh giá xử lí riêng
+            loadReviews(homestayId);
+
             // Tab du lịch
             // ✅ Tab Điểm du lịch gần đây (SỬA LỖI)
             if (Array.isArray(homestay.tourist_spots) && homestay.tourist_spots.length > 0) {
@@ -108,7 +94,6 @@ function viewHomestayDetails(homestayId) {
                         <div class="tourist-spot">
                             <h4>${spot.name}</h4>
                     <img src="${spot.icon}" alt="Hình ảnh Homestay" style="margin-left:17px; width:85%;height=80%">
-
                             <p><strong>Địa chỉ:</strong> ${spot.address}</p>
                             <p><strong>Khoảng cách:</strong> ${spot.distance} </p>
                             <button class="xem-duong-di"
@@ -130,15 +115,15 @@ function viewHomestayDetails(homestayId) {
                 touristElement.innerHTML = "<p>Không có thông tin về địa điểm du lịch.</p>";
             }
 
-            // // Sự kiện click cho tất cả nút "Xem đường đi"
-            // document.querySelectorAll(".tourist-spot .xem-duong-di").forEach(button => {
-            //     button.addEventListener("click", function () {
-            //         let lat = this.dataset.lat;
-            //         let lon = this.dataset.lon;
-            //         console.log("🌍 Đang hiển thị popup xem đường đi:", lat, lon);
-            //         openRoutePopup(lat, lon);
-            //     });
-            // });
+            // Sự kiện click cho tất cả nút "Xem đường đi"
+            document.querySelectorAll(".tourist-spot .xem-duong-di").forEach(button => {
+                button.addEventListener("click", function () {
+                    let lat = this.dataset.lat;
+                    let lon = this.dataset.lon;
+                    console.log("🌍 Đang hiển thị popup xem đường đi:", lat, lon);
+                    openRoutePopup(lat, lon);
+                });
+            });
 
             console.log("🔥 Đang hiển thị popup...");
 
@@ -151,6 +136,7 @@ function viewHomestayDetails(homestayId) {
         })
         .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
 }
+
 
 // Hàm đóng popup
 function closeHomestayPopup() {

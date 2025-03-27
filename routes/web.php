@@ -13,6 +13,7 @@ use App\Http\controllers\Admin\Roomcontroller;
 use App\Http\controllers\Admin\TourisSpotsController;
 // use App\Http\controllers\Admin\MapController;
 use App\Http\Controllers\User\MapController;
+use App\Http\Controllers\User\ReviewController;
 
 Route::get('/', function () {
 
@@ -42,8 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
     //Thông tin homestay khi xem chi tiết
     Route::get('/homestay/{id}', [GetInfoHomestayController::class, 'getHomestayDetails'])->name('getHomestayDetails');
-
-
+    //Đánh giá
+    Route::get('/homestay/{id}/reviews', [ReviewController::class, 'getReviews']);
+    Route::post('/reviews', [ReviewController::class, 'store']);
 
 
 // Route cho admin
