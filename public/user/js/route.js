@@ -1,3 +1,4 @@
+// Popup HIỂN THỊ ĐƯỜNG ĐI TỪ HOMESTAY ĐẾN VỊ TRÍ
 function openRoutePopup(endLat, endLon) {
     document.getElementById("homestayDetailPopup").style.display = "none";
     document.getElementById("routePopup").style.display = "block";
@@ -169,4 +170,49 @@ function removeRoute() {
     }
     document.getElementById("routeInfo").innerHTML = "";
     document.getElementById("routeHoverInfo").style.display = "none";
+}
+
+// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+
+//HIỂN THỊ ĐƯỜNG ĐI TỪ HOMESTAY ĐẾN ĐỊA ĐIỂM DU LỊCH
+function showRouteOnMap(startLat, startLon, endLat, endLon) {
+    mapboxgl.accessToken =
+        "pk.eyJ1IjoicHBodWNqcyIsImEiOiJjbTV5emdvNWUwbjhhMmpweXAybThmbmVhIn0.4PA9RDEf2HFu7jMuicJ1OQ";
+
+    fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/${startLon},${startLat};${endLon},${endLat}?geometries=geojson&access_token=${mapboxgl.accessToken}`)
+        .then(response => response.json())
+        .then(data => {
+            const route = data.routes[0].geometry;
+            if (!map.getSource("route")) {
+                map.addSource("route", {
+                    type: "geojson",
+                    data: {
+                        type: "Feature",
+                        properties: {},
+                        geometry: route
+                    }
+                });
+                map.addLayer({
+                    id: "route",
+                    type: "line",
+                    source: "route",
+                    layout: {
+                        "line-join": "round",
+                        "line-cap": "round"
+                    },
+                    paint: {
+                        "line-color": "#ff0000",
+                        "line-width": 5
+                    }
+                });
+            } else {
+                map.getSource("route").setData({
+                    type: "Feature",
+                    properties: {},
+                    geometry: route
+                });
+            }
+        })
+        .catch(error => console.error("⚠ Lỗi khi lấy đường đi:", error));
 }
