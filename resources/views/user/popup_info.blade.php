@@ -1,6 +1,15 @@
 <!-- Overlay -->
 <div id="homestayDetailOverlay" class="overlay"></div>
+<style>
+    #homestayTourists {
+    max-height: 600px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Bật thanh cuộn dọc */
+    padding: 10px; /* Thêm padding để không bị che khuất */
+    border: 1px solid #ddd; /* Tạo viền nhẹ để dễ phân biệt */
+    background: #fff; /* Giữ màu nền rõ ràng */
+}
 
+</style>
 <!-- Popup -->
 <div id="homestayDetailPopup" class="homestay-popup">
     <div class="popup-content">
@@ -11,13 +20,19 @@
             <button onclick="showTab('info')" class="tab-btn active">Thông tin</button>
             <button onclick="showTab('rooms')" class="tab-btn">Loại phòng</button>
             <button onclick="showTab('reviews')" class="tab-btn">Đánh giá</button>
-            <button onclick="showTab('tourists')" class="tab-btn">Điểm du lịch gần đây</button>
+            <div class="popup-content">
+                <button onclick="showTab('tourists')" class="tab-btn">Điểm du lịch gần đây</button>
+            </div>
+
+
         </div>
 
         <div id="homestayInfo" class="tab-content active"></div>
         <div id="homestayRooms" class="tab-content"></div>
         <div id="homestayReviews" class="tab-content"></div>
-        <div id="homestayTourist" class="tab-content"></div>
+        <div class="popup-content">
+            <div id="homestayTourists" class="tab-content"></div>
+        </div>
     </div>
 </div>
 

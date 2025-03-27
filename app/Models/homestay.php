@@ -35,4 +35,14 @@ class Homestay extends Model
     {
         return $this->hasMany(Service::class, 'homestay_id');
     }
+    public function distances()
+    {
+    return $this->hasMany(Distance::class, 'homestay_id');
+    }
+    public function touristSpots()
+    {
+        return $this->belongsToMany(TouristSpot::class, 'distances', 'homestay_id', 'tourist_spot_id')
+                    ->withPivot('distance')
+                    ->orderBy('distance');
+    }
 }

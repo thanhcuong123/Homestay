@@ -15,4 +15,11 @@ class TouristSpot extends Model
     {
         return $this->belongsTo(Icon::class);
     }
+
+    public function homestays()
+    {
+        return $this->belongsToMany(Homestay::class, 'distances', 'tourist_spot_id', 'homestay_id')
+                    ->withPivot('distance')
+                    ->orderBy('distance');
+    }
 }

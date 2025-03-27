@@ -27,7 +27,7 @@
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [105.7469, 10.0452], // Tọa độ mặc định
+            center: [105.7680404, 10.0299337], // Tọa độ mặc định
             zoom: 6
         });
 
@@ -42,7 +42,7 @@
                     var popupContent = `
     <div style="text-align:center;">
         <b>${homestay.name}</b><br>
-        <img src="${homestay.image}" alt="${homestay.name}" 
+        <img src="${homestay.image}" alt="${homestay.name}"
              style="width: 150px; height: 100px; border-radius: 8px; object-fit: cover;"><br>
         ${homestay.address}
     </div>
