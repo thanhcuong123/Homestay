@@ -66,10 +66,12 @@ function viewHomestayDetails(homestayId) {
                     .map(
                         (room) => `
                     <div class="room">
-                        <h4>${room.name
-                            } - giá phòng ${room.price.toLocaleString()} VND</h4>
-                        <p><strong>Số người tối đa:</strong> ${room.max_guests
-                            } người</p>
+                        <h4>${
+                            room.name
+                        } - giá phòng ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${
+                            room.max_guests
+                        } người</p>
                         <p><strong>Diện tích:</strong> ${room.area} m²</p>
                         <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
                     </div>
@@ -80,35 +82,25 @@ function viewHomestayDetails(homestayId) {
                 roomsElement.innerHTML = "<p>Không có thông tin về phòng.</p>";
             }
             // ✅ Tab Đánh giá
-            if (
-                Array.isArray(homestay.reviews) &&
-                homestay.reviews.length > 0
-            ) {
-                reviewsElement.innerHTML = homestay.reviews
-                    .map(
-                        (review) => `
-                    <div class="review">
-                        <p><strong>${review.user}</strong> (${review.rating}⭐)</p>
-                        <p>${review.comment}</p>
-                    </div>
-                `
-                    )
-                    .join("<hr>");
-            } else {
-                reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
-            }
+            //js đánh giá xử lí riêng
+            loadReviews(homestayId);
+
             // Tab du lịch
             // ✅ Tab Điểm du lịch gần đây (SỬA LỖI)
-            if (Array.isArray(homestay.tourist_spots) && homestay.tourist_spots.length > 0) {
+            if (
+                Array.isArray(homestay.tourist_spots) &&
+                homestay.tourist_spots.length > 0
+            ) {
                 // const nearbySpots = homestay.tourist_spots.filter(spot => spot.distance <= 5);
-                const nearbySpots = homestay.tourist_spots
+                const nearbySpots = homestay.tourist_spots;
 
                 if (nearbySpots.length > 0) {
-                    touristElement.innerHTML = nearbySpots.map((spot) => `
+                    touristElement.innerHTML = nearbySpots
+                        .map(
+                            (spot) => `
                         <div class="tourist-spot">
                             <h4>${spot.name}</h4>
                     <img src="${spot.icon}" alt="Hình ảnh Homestay" style="margin-left:17px; width:85%;height=80%">
-
                             <p><strong>Địa chỉ:</strong> ${spot.address}</p>
                             <p><strong>Khoảng cách:</strong> ${spot.distance} </p>
                             <button class="xem-duong-di"
@@ -122,23 +114,33 @@ function viewHomestayDetails(homestayId) {
                                 Xem đường đi
                             </button>
                         </div>
-                    `).join("<hr>");
+                    `
+                        )
+                        .join("<hr>");
                 } else {
-                    touristElement.innerHTML = "<p>Không có địa điểm du lịch nào trong vòng 5km.</p>";
+                    touristElement.innerHTML =
+                        "<p>Không có địa điểm du lịch nào trong vòng 5km.</p>";
                 }
             } else {
-                touristElement.innerHTML = "<p>Không có thông tin về địa điểm du lịch.</p>";
+                touristElement.innerHTML =
+                    "<p>Không có thông tin về địa điểm du lịch.</p>";
             }
 
-            // // Sự kiện click cho tất cả nút "Xem đường đi"
-            // document.querySelectorAll(".tourist-spot .xem-duong-di").forEach(button => {
-            //     button.addEventListener("click", function () {
-            //         let lat = this.dataset.lat;
-            //         let lon = this.dataset.lon;
-            //         console.log("🌍 Đang hiển thị popup xem đường đi:", lat, lon);
-            //         openRoutePopup(lat, lon);
-            //     });
-            // });
+            // Sự kiện click cho tất cả nút "Xem đường đi"
+            document
+                .querySelectorAll(".tourist-spot .xem-duong-di")
+                .forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let lat = this.dataset.lat;
+                        let lon = this.dataset.lon;
+                        console.log(
+                            "🌍 Đang hiển thị popup xem đường đi:",
+                            lat,
+                            lon
+                        );
+                        openRoutePopup(lat, lon);
+                    });
+                });
 
             console.log("🔥 Đang hiển thị popup...");
 
@@ -174,12 +176,10 @@ function closeHomestayPopup() {
 
 // Chuyển tab
 function showTab(tabName) {
-    document
-        .querySelectorAll(".tab-content")
-        .forEach((tab) => {
-            tab.classList.remove("active");
-            tab.style.display = "none"; // Ẩn tất cả tab
-        });
+    document.querySelectorAll(".tab-content").forEach((tab) => {
+        tab.classList.remove("active");
+        tab.style.display = "none"; // Ẩn tất cả tab
+    });
 
     document
         .querySelectorAll(".tab-btn")
@@ -190,7 +190,10 @@ function showTab(tabName) {
     );
 
     console.log("Tab cần mở:", tabElement);
-    console.log("Nội dung tab:", tabElement ? tabElement.innerHTML : "Không tìm thấy tab");
+    console.log(
+        "Nội dung tab:",
+        tabElement ? tabElement.innerHTML : "Không tìm thấy tab"
+    );
 
     if (tabElement) {
         tabElement.classList.add("active");

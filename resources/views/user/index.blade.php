@@ -44,6 +44,7 @@
     <script src="{{ asset('user/js/search.js') }}"></script>
     <script src="{{ asset('user/js/info_homestay.js') }}"></script>
     <script src="{{ asset('user/js/route.js') }}" ></script>
+    <script src="{{ asset('user/js/review.js') }}"
     <!-- <script src="{{ asset('system/script.js')}}"></script> -->
 
 </body>
