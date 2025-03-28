@@ -83,7 +83,36 @@ function viewHomestayDetails(homestayId) {
             }
             // ✅ Tab Đánh giá
             //js đánh giá xử lí riêng
-            loadReviews(homestayId);
+            if (
+                Array.isArray(homestay.reviews) &&
+                homestay.reviews.length > 0
+            ) {
+                reviewsElement.innerHTML = homestay.reviews
+                    .map((review) => {
+                        // Hiển thị số sao dưới dạng ký tự ⭐
+                        let stars = "⭐".repeat(review.rating);
+
+                        return `
+                        <div class="review">
+                            <div class="review-header">
+                                <img src="${
+                                    review.avatar
+                                        ? review.avatar
+                                        : "storage/uploads/icon/an_danh.jpg"
+                                }" alt="Ảnh đại diện" class="review-avatar">
+                                <p><strong>${review.user_name}</strong></p>
+                                <p class="stars">${stars}</p>
+                            </div>
+                            <p>${review.comment}</p>
+                        </div>
+                    `;
+                    })
+                    .join("<hr>");
+            } else {
+                reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+            }
+
+            // loadReviews(homestayId);
 
             // Tab du lịch
             // ✅ Tab Điểm du lịch gần đây (SỬA LỖI)

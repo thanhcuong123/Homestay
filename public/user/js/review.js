@@ -5,20 +5,34 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`/homestay/${homestayId}/reviews`)
             .then((response) => response.json())
             .then((reviews) => {
+                console.log("📌 Dữ liệu API:", reviews);
                 const reviewList = document.getElementById("reviewList");
-                reviewList.innerHTML =
-                    reviews.length > 0
-                        ? reviews
-                              .map(
-                                  (review) => `
-                        <div class="review">
-                            <p><strong>${review.user_name}</strong> (${review.rating}⭐)</p>
-                            <p>${review.content}</p>
-                        </div>
-                    `
-                              )
-                              .join("<hr>")
-                        : "<p>Chưa có đánh giá nào.</p>";
+
+                if (Array.isArray(reviews) && reviews.length > 0) {
+                    reviewList.innerHTML = reviews
+                        .map((review) => {
+                            // Hiển thị số sao dưới dạng ký tự ⭐
+                            let stars = "⭐".repeat(review.rating);
+
+                            return `
+                            <div class="review">
+                                <div class="review-header">
+                                    <img src="${
+                                        review.avatar
+                                            ? review.avatar
+                                            : "default-avatar.jpg"
+                                    }" alt="Ảnh đại diện" class="review-avatar">
+                                    <p><strong>${review.user_name}</strong></p>
+                                    <p class="stars">${stars}</p>
+                                </div>
+                                <p>${review.comment}</p>
+                            </div>
+                        `;
+                        })
+                        .join("<hr>");
+                } else {
+                    reviewList.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+                }
             })
             .catch((error) => console.error("⛔ Lỗi khi tải đánh giá:", error));
     };

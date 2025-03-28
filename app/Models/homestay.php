@@ -37,12 +37,16 @@ class Homestay extends Model
     }
     public function distances()
     {
-    return $this->hasMany(Distance::class, 'homestay_id');
+        return $this->hasMany(Distance::class, 'homestay_id');
     }
     public function touristSpots()
     {
         return $this->belongsToMany(TouristSpot::class, 'distances', 'homestay_id', 'tourist_spot_id')
-                    ->withPivot('distance')
-                    ->orderBy('distance');
+            ->withPivot('distance')
+            ->orderBy('distance');
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'homestay_id');
     }
 }
