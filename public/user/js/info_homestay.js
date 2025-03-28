@@ -153,20 +153,20 @@ function viewHomestayDetails(homestayId) {
             }
 
             // Sự kiện click cho tất cả nút "Xem đường đi"
-            document
-                .querySelectorAll(".tourist-spot .xem-duong-di")
-                .forEach((button) => {
-                    button.addEventListener("click", function () {
-                        let lat = this.dataset.lat;
-                        let lon = this.dataset.lon;
-                        console.log(
-                            "🌍 Đang hiển thị popup xem đường đi:",
-                            lat,
-                            lon
-                        );
-                        openRoutePopup(lat, lon);
-                    });
+            document.querySelectorAll(".tourist-spot .xem-duong-di").forEach(button => {
+                button.addEventListener("click", function () {
+                    let spotLat = this.dataset.lat;  // Lấy lat của địa điểm du lịch
+                    let spotLon = this.dataset.lon;  // Lấy lon của địa điểm du lịch
+
+                    let homeLat = homestay.latitude; // Lấy lat của homestay hiện tại
+                    let homeLon = homestay.longitude; // Lấy lon của homestay hiện tại
+
+                    console.log("🚗 Hiển thị đường đi từ homestay đến địa điểm du lịch:", homeLat, homeLon, "➡", spotLat, spotLon);
+
+                    // Gọi Mapbox để hiển thị đường đi
+                    showRouteOnMap(homeLat, homeLon, spotLat, spotLon);
                 });
+            });
 
             console.log("🔥 Đang hiển thị popup...");
 
