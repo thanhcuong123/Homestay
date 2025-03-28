@@ -2,13 +2,21 @@
 <div id="homestayDetailOverlay" class="overlay"></div>
 <style>
     #homestayTourists {
-    max-height: 600px; /* Giới hạn chiều cao */
-    overflow-y: auto; /* Bật thanh cuộn dọc */
-    padding: 10px; /* Thêm padding để không bị che khuất */
-    border: 1px solid #ddd; /* Tạo viền nhẹ để dễ phân biệt */
-    background: #fff; /* Giữ màu nền rõ ràng */
-}
+        max-height: 600px;
+        /* Giới hạn chiều cao */
+        overflow-y: auto;
+        /* Bật thanh cuộn dọc */
+        padding: 10px;
+        /* Thêm padding để không bị che khuất */
+        border: 1px solid #ddd;
+        /* Tạo viền nhẹ để dễ phân biệt */
+        background: #fff;
+        /* Giữ màu nền rõ ràng */
+    }
 
+    .review-avatar {
+        width: 50px;
+    }
 </style>
 <!-- Popup -->
 <div id="homestayDetailPopup" class="homestay-popup">
@@ -54,4 +62,4 @@
 </div>
 
 @include('user.popup_route')
-<script src="{{ asset('user/js/route.js') }}" ></script>
+<script src="{{ asset('user/js/route.js') }}"></script>

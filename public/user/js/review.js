@@ -3,19 +3,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.loadReviews = function (homestayId) {
         fetch(`/homestay/${homestayId}/reviews`)
-            .then(response => response.json())
-            .then(reviews => {
+            .then((response) => response.json())
+            .then((reviews) => {
+                console.log("📌 Dữ liệu API:", reviews);
                 const reviewList = document.getElementById("reviewList");
-                reviewList.innerHTML = reviews.length > 0
-                    ? reviews.map(review => `
-                        <div class="review">
-                            <p><strong>${review.user_name}</strong> (${review.rating}⭐)</p>
-                            <p>${review.content}</p>
-                        </div>
-                    `).join("<hr>")
-                    : "<p>Chưa có đánh giá nào.</p>";
+
+                if (Array.isArray(reviews) && reviews.length > 0) {
+                    reviewList.innerHTML = reviews
+                        .map((review) => {
+                            // Hiển thị số sao dưới dạng ký tự ⭐
+                            let stars = "⭐".repeat(review.rating);
+
+                            return `
+                            <div class="review">
+                                <div class="review-header">
+                                    <img src="${review.avatar
+                                    ? review.avatar
+                                    : "default-avatar.jpg"
+                                }" alt="Ảnh đại diện" class="review-avatar">
+                                    <p><strong>${review.user_name}</strong></p>
+                                    <p class="stars">${stars}</p>
+                                </div>
+                                <p>${review.comment}</p>
+                            </div>
+                        `;
+                        })
+                        .join("<hr>");
+                } else {
+                    reviewList.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+                }
             })
-            .catch(error => console.error("⛔ Lỗi khi tải đánh giá:", error));
+            .catch((error) => console.error("⛔ Lỗi khi tải đánh giá:", error));
     };
 
     // Xử lý gửi đánh giá
@@ -23,29 +41,30 @@ document.addEventListener("DOMContentLoaded", function () {
     if (reviewForm) {
         reviewForm.addEventListener("submit", function (event) {
             event.preventDefault();
-
-            const homestayId = document.getElementById("reviewHomestayId").value;
+            const homestayId =
+                document.getElementById("reviewHomestayId").value;
             const userName = document.getElementById("userName").value;
             const rating = document.getElementById("rating").value;
             const content = document.getElementById("content").value;
-
-            fetch('/reviews', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+            fetch("/reviews", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     homestay_id: homestayId,
                     user_name: userName,
                     rating: rating,
-                    content: content
-                })
+                    content: content,
+                }),
             })
-                .then(response => response.json())
+                .then((response) => response.json())
                 .then(() => {
                     alert("Cảm ơn bạn đã đánh giá!");
                     loadReviews(homestayId);
                     reviewForm.reset();
                 })
-                .catch(error => console.error("⛔ Lỗi khi gửi đánh giá:", error));
+                .catch((error) =>
+                    console.error("⛔ Lỗi khi gửi đánh giá:", error)
+                );
         });
     }
 });

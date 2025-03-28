@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\User;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\homestay;
@@ -12,13 +13,13 @@ class GetInfoHomestayController extends Controller
     {
         $homestay = homestay::with([
             'owner',
-            'roomTypes.rooms',
+            'reviews.user',
             'roomTypes',
             'services',
         ])->find($id);
 
         if (!$homestay) {
-            return redirect()->back()->with('error', 'Homestay không tồn tại');
+            return response()->json(['error' => 'Homestay không tồn tại'], 404);
         }
 
         // Kiểm tra roomTypes có tồn tại không
@@ -28,6 +29,8 @@ class GetInfoHomestayController extends Controller
                 return $roomType->rooms ? $roomType->rooms->flatMap->reviews : collect([]);
             });
         }
+
+
         $latitude = $homestay->latitude;
         $longitude = $homestay->longitude;
         // $radius = 5; // km
@@ -36,7 +39,7 @@ class GetInfoHomestayController extends Controller
                 id, name, address, latitude, longitude, icon,
                 (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance
             ", [$latitude, $longitude, $latitude])
-        //    ->having('distance', '<=', $radius)
+            //    ->having('distance', '<=', $radius)
             ->orderBy('distance')
             ->get();
 
@@ -48,6 +51,7 @@ class GetInfoHomestayController extends Controller
             'latitude' => $homestay->latitude,
             'longitude' => $homestay->longitude,
             'image' => asset('storage/' . $homestay->image),
+
             'rooms' => $homestay->roomTypes->map(function ($roomType) {
                 return [
                     'name' => $roomType->name,
@@ -57,13 +61,22 @@ class GetInfoHomestayController extends Controller
                     'amenities' => $roomType->amenities,
                 ];
             }),
-            'reviews' => $reviews->map(function ($review) {
+            // 'reviews' => $reviews->map(function ($review) {
+            //     return [
+            //         'user_id' => $review->user ? $review->user->name : 'Ẩn danh',
+            //         'comment' => $review->comment ?? 'Không có bình luận',
+            //         'rating' => $review->rating ?? 0,
+            //     ];
+            // }),
+            'reviews' => $homestay->reviews->map(function ($review) {
                 return [
-                    'user' => $review->user ? $review->user->name : 'Ẩn danh',
-                    'comment' => $review->content ?? 'Không có bình luận',
+                    'user_name' => $review->user ? $review->user->name : 'Ẩn danh', // Đổi 'user' thành 'user_name'
+                    'comment' => $review->comment ?? 'Không có bình luận',
                     'rating' => $review->rating ?? 0,
                 ];
             }),
+
+
             'tourist_spots' => $touristSpots->map(function ($spot) {
                 return [
                     'id' => $spot->id,

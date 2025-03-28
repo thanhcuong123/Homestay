@@ -81,16 +81,49 @@ function viewHomestayDetails(homestayId) {
             }
             // ✅ Tab Đánh giá
             //js đánh giá xử lí riêng
-            loadReviews(homestayId);
+            if (
+                Array.isArray(homestay.reviews) &&
+                homestay.reviews.length > 0
+            ) {
+                reviewsElement.innerHTML = homestay.reviews
+                    .map((review) => {
+                        // Hiển thị số sao dưới dạng ký tự ⭐
+                        let stars = "⭐".repeat(review.rating);
+
+                        return `
+                        <div class="review">
+                            <div class="review-header">
+                                <img src="${review.avatar
+                                ? review.avatar
+                                : "storage/uploads/icon/an_danh.jpg"
+                            }" alt="Ảnh đại diện" class="review-avatar">
+                                <p><strong>${review.user_name}</strong></p>
+                                <p class="stars">${stars}</p>
+                            </div>
+                            <p>${review.comment}</p>
+                        </div>
+                    `;
+                    })
+                    .join("<hr>");
+            } else {
+                reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+            }
+
+            // loadReviews(homestayId);
 
             // Tab du lịch
             // ✅ Tab Điểm du lịch gần đây (SỬA LỖI)
-            if (Array.isArray(homestay.tourist_spots) && homestay.tourist_spots.length > 0) {
+            if (
+                Array.isArray(homestay.tourist_spots) &&
+                homestay.tourist_spots.length > 0
+            ) {
                 // const nearbySpots = homestay.tourist_spots.filter(spot => spot.distance <= 5);
-                const nearbySpots = homestay.tourist_spots
+                const nearbySpots = homestay.tourist_spots;
 
                 if (nearbySpots.length > 0) {
-                    touristElement.innerHTML = nearbySpots.map((spot) => `
+                    touristElement.innerHTML = nearbySpots
+                        .map(
+                            (spot) => `
                         <div class="tourist-spot">
                             <h4>${spot.name}</h4>
                     <img src="${spot.icon}" alt="Hình ảnh Homestay" style="margin-left:17px; width:85%;height=80%">
@@ -107,28 +140,33 @@ function viewHomestayDetails(homestayId) {
                                 Xem đường đi
                             </button>
                         </div>
-                    `).join("<hr>");
+                    `
+                        )
+                        .join("<hr>");
                 } else {
-                    touristElement.innerHTML = "<p>Không có địa điểm du lịch nào trong vòng 5km.</p>";
+                    touristElement.innerHTML =
+                        "<p>Không có địa điểm du lịch nào trong vòng 5km.</p>";
                 }
             } else {
-                touristElement.innerHTML = "<p>Không có thông tin về địa điểm du lịch.</p>";
+                touristElement.innerHTML =
+                    "<p>Không có thông tin về địa điểm du lịch.</p>";
             }
 
             // Sự kiện click cho tất cả nút "Xem đường đi"
-            document.querySelectorAll(".tourist-spot .xem-duong-di").forEach(button => {
-                button.addEventListener("click", function () {
-                    let spotLat = this.dataset.lat;
-                    let spotLon = this.dataset.lon;
-
-                    let homeLat = homestay.latitude;
-                    let homeLon = homestay.longitude;
-
-                    console.log("🚗 Hiển thị đường đi từ homestay đến địa điểm du lịch:", homeLat, homeLon, "➡", spotLat, spotLon);
-
-                    showRouteOnMap(homeLat, homeLon, spotLat, spotLon);
+            document
+                .querySelectorAll(".tourist-spot .xem-duong-di")
+                .forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let lat = this.dataset.lat;
+                        let lon = this.dataset.lon;
+                        console.log(
+                            "🌍 Đang hiển thị popup xem đường đi:",
+                            lat,
+                            lon
+                        );
+                        openRoutePopup(lat, lon);
+                    });
                 });
-            });
 
             console.log("🔥 Đang hiển thị popup...");
 
@@ -165,12 +203,10 @@ function closeHomestayPopup() {
 
 // Chuyển tab
 function showTab(tabName) {
-    document
-        .querySelectorAll(".tab-content")
-        .forEach((tab) => {
-            tab.classList.remove("active");
-            tab.style.display = "none"; // Ẩn tất cả tab
-        });
+    document.querySelectorAll(".tab-content").forEach((tab) => {
+        tab.classList.remove("active");
+        tab.style.display = "none"; // Ẩn tất cả tab
+    });
 
     document
         .querySelectorAll(".tab-btn")
@@ -181,7 +217,10 @@ function showTab(tabName) {
     );
 
     console.log("Tab cần mở:", tabElement);
-    console.log("Nội dung tab:", tabElement ? tabElement.innerHTML : "Không tìm thấy tab");
+    console.log(
+        "Nội dung tab:",
+        tabElement ? tabElement.innerHTML : "Không tìm thấy tab"
+    );
 
     if (tabElement) {
         tabElement.classList.add("active");
