@@ -176,43 +176,143 @@ function removeRoute() {
 // ------------------------------------------------------------------------------------------------
 
 //HIỂN THỊ ĐƯỜNG ĐI TỪ HOMESTAY ĐẾN ĐỊA ĐIỂM DU LỊCH
-function showRouteOnMap(startLat, startLon, endLat, endLon) {
-    mapboxgl.accessToken =
-        "pk.eyJ1IjoicHBodWNqcyIsImEiOiJjbTV5emdvNWUwbjhhMmpweXAybThmbmVhIn0.4PA9RDEf2HFu7jMuicJ1OQ";
+// function showRouteOnMap(startLat, startLon, endLat, endLon) {
+//     mapboxgl.accessToken =
+//         "pk.eyJ1IjoicHBodWNqcyIsImEiOiJjbTV5emdvNWUwbjhhMmpweXAybThmbmVhIn0.4PA9RDEf2HFu7jMuicJ1OQ";
 
+//     fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/${startLon},${startLat};${endLon},${endLat}?geometries=geojson&access_token=${mapboxgl.accessToken}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             const route = data.routes[0].geometry;
+
+//             if (!map.getSource("route")) {
+
+//                 map.addSource("route", {
+//                     type: "geojson",
+//                     data: {
+//                         type: "Feature",
+//                         properties: {},
+//                         geometry: route
+//                     }
+//                 });
+//                 map.addLayer({
+//                     id: "route",
+//                     type: "line",
+//                     source: "route",
+//                     layout: {
+//                         "line-join": "round",
+//                         "line-cap": "round"
+//                     },
+//                     paint: {
+//                         "line-color": "#ff0000",
+//                         "line-width": 5
+//                     }
+//                 });
+//             } else {
+//                 map.getSource("route").setData({
+//                     type: "Feature",
+//                     properties: {},
+//                     geometry: route
+//                 });
+//             }
+//         })
+//         .catch(error => console.error("⚠ Lỗi khi lấy đường đi:", error));
+// }mapboxgl.accessToken = "pk.eyJ1IjoicHBodWNqcyIsImEiOiJjbTV5emdvNWUwbjhhMmpweXAybThmbmVhIn0.4PA9RDEf2HFu7jMuicJ1OQ";
+
+let touristMarkers = []; // Lưu danh sách marker điểm du lịch
+let currentRoute = null; // Lưu tuyến đường hiện tại
+
+function showRouteOnMap(startLat, startLon, endLat, endLon, placeName = "Điểm du lịch") {
     fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/${startLon},${startLat};${endLon},${endLat}?geometries=geojson&access_token=${mapboxgl.accessToken}`)
         .then(response => response.json())
         .then(data => {
-            const route = data.routes[0].geometry;
-            if (!map.getSource("route")) {
-                map.addSource("route", {
-                    type: "geojson",
-                    data: {
-                        type: "Feature",
-                        properties: {},
-                        geometry: route
-                    }
-                });
-                map.addLayer({
-                    id: "route",
-                    type: "line",
-                    source: "route",
-                    layout: {
-                        "line-join": "round",
-                        "line-cap": "round"
-                    },
-                    paint: {
-                        "line-color": "#ff0000",
-                        "line-width": 5
-                    }
-                });
-            } else {
-                map.getSource("route").setData({
-                    type: "Feature",
-                    properties: {},
-                    geometry: route
-                });
+            if (!data.routes || data.routes.length === 0) {
+                console.error("⚠ Không tìm thấy tuyến đường!");
+                return;
             }
+
+            const route = data.routes[0].geometry;
+
+            // 🔥 Xóa tuyến đường cũ trước khi thêm mới
+            removeOldRoute();
+
+            // Thêm tuyến đường mới
+            currentRoute = {
+                type: "Feature",
+                properties: {},
+                geometry: route
+            };
+
+            map.addSource("route", { type: "geojson", data: currentRoute });
+
+            map.addLayer({
+                id: "route",
+                type: "line",
+                source: "route",
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round"
+                },
+                paint: {
+                    "line-color": "#ff0000",
+                    "line-width": 5
+                }
+            });
+
+            // 🎯 Thêm icon điểm du lịch, không xóa điểm cũ
+            addTouristAttractionMarker(endLat, endLon, placeName);
+
+            console.log("📍 Đã hiển thị đường đi và icon điểm du lịch!");
         })
-        .catch(error => console.error("⚠ Lỗi khi lấy đường đi:", error));
+        .catch(error => console.error("⚠ Lỗi khi tìm đường:", error));
 }
+
+// 🔥 Hàm xóa tuyến đường cũ (KHÔNG XÓA MARKER)
+function removeOldRoute() {
+    if (map.getSource("route")) {
+        map.removeLayer("route");
+        map.removeSource("route");
+    }
+}
+
+// 🎯 Hàm thêm icon điểm du lịch (KHÔNG XÓA marker cũ)
+function addTouristAttractionMarker(lat, lon, name = "Điểm du lịch") {
+    let iconUrl = "/storage/uploads/icon/tourist-icon.jpg"; // Đường dẫn đến icon
+
+    // Tạo phần tử HTML chứa icon
+    const el = document.createElement("div");
+    el.className = "custom-marker";
+    el.style.backgroundImage = `url(${iconUrl})`;
+    el.style.width = "40px";
+    el.style.height = "40px";
+    el.style.backgroundSize = "cover";
+    el.style.borderRadius = "30%";
+
+    const marker = new mapboxgl.Marker(el)
+        .setLngLat([lon, lat])
+        .setPopup(
+            new mapboxgl.Popup().setHTML(`
+                <div style="text-align:center;">
+                    <h3>📍 ${name}</h3>
+                    <p>Địa điểm du lịch nổi bật</p>
+                <button onclick="removeOldRoute()">❌ Hủy xem đường</button>
+
+                </div>
+            `)
+        )
+        .addTo(map);
+
+    touristMarkers.push(marker); // 🔥 Lưu marker để không bị mất
+
+
+    console.log(`📌 Đã thêm điểm du lịch tại (${lat}, ${lon})`);
+}
+
+
+// 🚀 Ví dụ: Hiển thị đường từ một điểm đến Chợ Bến Thành
+// showRouteOnMap(10.762622, 106.660172, 10.7769, 106.7009, "Chợ Bến Thành");
+
+// Ví dụ: Thêm một điểm du lịch cụ thể
+// addTouristAttractionMarker(10.7769, 106.7009, "Chợ Bến Thành");
+
+
