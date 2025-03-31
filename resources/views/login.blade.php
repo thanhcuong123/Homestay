@@ -122,7 +122,7 @@
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
-                <a href="#">Quên mật khẩu?</a>
+                <!-- <a href="#">Quên mật khẩu?</a> -->
                 @error('password')
                 <div class="error-message">{{ $message }}</div>
                 @enderror

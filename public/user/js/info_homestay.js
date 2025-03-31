@@ -66,10 +66,12 @@ function viewHomestayDetails(homestayId) {
                     .map(
                         (room) => `
                     <div class="room">
-                        <h4>${room.name
-                            } - giá phòng ${room.price.toLocaleString()} VND</h4>
-                        <p><strong>Số người tối đa:</strong> ${room.max_guests
-                            } người</p>
+                        <h4>${
+                            room.name
+                        } - giá phòng ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${
+                            room.max_guests
+                        } người</p>
                         <p><strong>Diện tích:</strong> ${room.area} m²</p>
                         <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
                     </div>
@@ -81,33 +83,124 @@ function viewHomestayDetails(homestayId) {
             }
             // ✅ Tab Đánh giá
             //js đánh giá xử lí riêng
-            if (
-                Array.isArray(homestay.reviews) &&
-                homestay.reviews.length > 0
-            ) {
-                reviewsElement.innerHTML = homestay.reviews
-                    .map((review) => {
-                        // Hiển thị số sao dưới dạng ký tự ⭐
-                        let stars = "⭐".repeat(review.rating);
+            // if (
+            //     Array.isArray(homestay.reviews) &&
+            //     homestay.reviews.length > 0
+            // ) {
+            //     reviewsElement.innerHTML = homestay.reviews
+            //         .map((review) => {
+            //             // Hiển thị số sao dưới dạng ký tự ⭐
+            //             let stars = "⭐".repeat(review.rating);
 
-                        return `
-                        <div class="review">
-                            <div class="review-header">
-                                <img src="${review.avatar
-                                ? review.avatar
-                                : "storage/uploads/icon/an_danh.jpg"
-                            }" alt="Ảnh đại diện" class="review-avatar">
-                                <p><strong>${review.user_name}</strong></p>
-                                <p class="stars">${stars}</p>
-                            </div>
-                            <p>${review.comment}</p>
-                        </div>
-                    `;
+            //             return `
+            //             <div class="review">
+            //                 <div class="review-header">
+            //                     <img src="${
+            //                         review.avatar
+            //                             ? review.avatar
+            //                             : "storage/uploads/icon/an_danh.jpg"
+            //                     }" alt="Ảnh đại diện" class="review-avatar">
+            //                     <p><strong>${review.user_name}</strong></p>
+            //                     <p class="stars">${stars}</p>
+            //                 </div>
+            //                 <p>${review.comment}</p>
+            //             </div>
+            //         `;
+            //         })
+            //         .join("<hr>");
+            // } else {
+            //     reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+            // }
+
+            // ✅ Tab Đánh giá
+            reviewsElement.innerHTML = `
+<button id="btnAddReview" style="margin-bottom: 10px; padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 5px;">Thêm đánh giá</button>
+<div id="reviewForm" style="display: none; margin-bottom: 10px;">
+    <textarea id="reviewComment" placeholder="Nhập đánh giá của bạn" rows="3" style="width: 100%;"></textarea>
+    <br>
+    <label for="reviewRating">Chọn số sao:</label>
+    <select id="reviewRating">
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="1">⭐</option>
+    </select>
+    <br>
+    <button id="submitReview" style="margin-top: 10px; padding: 8px 12px; background: #28a745; color: white; border: none; border-radius: 5px;">Gửi đánh giá</button>
+</div>
+${
+    homestay.reviews.length > 0
+        ? homestay.reviews
+              .map((review) => {
+                  let stars = "⭐".repeat(review.rating);
+                  return `
+        <div class="review">
+            <div class="review-header">
+                <img src="${
+                    review.avatar || "storage/uploads/icon/an_danh.jpg"
+                }" alt="Ảnh đại diện" class="review-avatar">
+                <p><strong>${review.user_name}</strong></p>
+                <p class="stars">${stars}</p>
+            </div>
+            <p>${review.comment}</p>
+        </div>
+    `;
+              })
+              .join("<hr>")
+        : "<p>Chưa có đánh giá nào.</p>"
+}
+`;
+            document
+                .getElementById("submitReview")
+                .addEventListener("click", function () {
+                    let comment =
+                        document.getElementById("reviewComment").value;
+                    let rating = document.getElementById("reviewRating").value;
+                    let csrfToken = document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content");
+
+                    if (!comment.trim()) {
+                        alert("Vui lòng nhập nội dung đánh giá!");
+                        return;
+                    }
+
+                    let newReview = {
+                        homestay_id: homestay.id,
+                        rating: parseInt(rating),
+                        comment: comment,
+                    };
+
+                    fetch("/reviews", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken,
+                        },
+                        body: JSON.stringify(newReview),
                     })
-                    .join("<hr>");
-            } else {
-                reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
-            }
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.message) {
+                                alert("Cảm ơn bạn đã đánh giá!");
+
+                                homestay.reviews.push(data.review);
+                                viewHomestayDetails(homestay.id);
+                            } else {
+                                alert("Lỗi khi lưu đánh giá!");
+                            }
+                        })
+                        .catch((error) => console.error("Lỗi:", error));
+                });
+
+            // Xử lý hiển thị form đánh giá khi bấm vào nút
+            document
+                .getElementById("btnAddReview")
+                .addEventListener("click", function () {
+                    document.getElementById("reviewForm").style.display =
+                        "block";
+                });
 
             // loadReviews(homestayId);
 
@@ -153,20 +246,29 @@ function viewHomestayDetails(homestayId) {
             }
 
             // Sự kiện click cho tất cả nút "Xem đường đi"
-            document.querySelectorAll(".tourist-spot .xem-duong-di").forEach(button => {
-                button.addEventListener("click", function () {
-                    let spotLat = this.dataset.lat;  // Lấy lat của địa điểm du lịch
-                    let spotLon = this.dataset.lon;  // Lấy lon của địa điểm du lịch
+            document
+                .querySelectorAll(".tourist-spot .xem-duong-di")
+                .forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let spotLat = this.dataset.lat; // Lấy lat của địa điểm du lịch
+                        let spotLon = this.dataset.lon; // Lấy lon của địa điểm du lịch
 
-                    let homeLat = homestay.latitude; // Lấy lat của homestay hiện tại
-                    let homeLon = homestay.longitude; // Lấy lon của homestay hiện tại
+                        let homeLat = homestay.latitude; // Lấy lat của homestay hiện tại
+                        let homeLon = homestay.longitude; // Lấy lon của homestay hiện tại
 
-                    console.log("🚗 Hiển thị đường đi từ homestay đến địa điểm du lịch:", homeLat, homeLon, "➡", spotLat, spotLon);
+                        console.log(
+                            "🚗 Hiển thị đường đi từ homestay đến địa điểm du lịch:",
+                            homeLat,
+                            homeLon,
+                            "➡",
+                            spotLat,
+                            spotLon
+                        );
 
-                    // Gọi Mapbox để hiển thị đường đi
-                    showRouteOnMap(homeLat, homeLon, spotLat, spotLon);
+                        // Gọi Mapbox để hiển thị đường đi
+                        showRouteOnMap(homeLat, homeLon, spotLat, spotLon);
+                    });
                 });
-            });
 
             console.log("🔥 Đang hiển thị popup...");
 
@@ -179,7 +281,6 @@ function viewHomestayDetails(homestayId) {
         })
         .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
 }
-
 
 // Hàm đóng popup
 function closeHomestayPopup() {

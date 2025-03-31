@@ -39,13 +39,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/mapall', [MapController::class, 'showAllLocations'])->name('mapall');
     Route::get('/distance/{homestayId}/{touristId}', [MapController::class, 'calculateDistance']);
 });
-    //Search
-    Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
-    //Thông tin homestay khi xem chi tiết
-    Route::get('/homestay/{id}', [GetInfoHomestayController::class, 'getHomestayDetails'])->name('getHomestayDetails');
-    //Đánh giá
-    Route::get('/homestay/{id}/reviews', [ReviewController::class, 'getReviews']);
-    Route::post('/reviews', [ReviewController::class, 'store']);
+//Search
+Route::get('/search-homestay', [SearchController::class, 'searchHomestay'])->name('searchHomestay');
+//Thông tin homestay khi xem chi tiết
+Route::get('/homestay/{id}', [GetInfoHomestayController::class, 'getHomestayDetails'])->name('getHomestayDetails');
+//Đánh giá
+Route::get('/homestay/{id}/reviews', [ReviewController::class, 'getReviews']);
+Route::post('/reviews', [ReviewController::class, 'store']);
 
 
 // Route cho admin

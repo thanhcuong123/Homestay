@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("📢 Review.js đã được tải!");
+    console.log(" Review.js đã được tải!");
 
     window.loadReviews = function (homestayId) {
         fetch(`/homestay/${homestayId}/reviews`)
             .then((response) => response.json())
             .then((reviews) => {
-                console.log("📌 Dữ liệu API:", reviews);
+                console.log(" Dữ liệu API:", reviews);
                 const reviewList = document.getElementById("reviewList");
 
-                if (Array.isArray(reviews) && reviews.length > 0) {
-                    reviewList.innerHTML = reviews
+                if (
+                    Array.isArray(homestay.reviews) &&
+                    homestay.reviews.length > 0
+                ) {
+                    reviewsElement.innerHTML = homestay.reviews
                         .map((review) => {
                             // Hiển thị số sao dưới dạng ký tự ⭐
                             let stars = "⭐".repeat(review.rating);
@@ -17,10 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             return `
                             <div class="review">
                                 <div class="review-header">
-                                    <img src="${review.avatar
-                                    ? review.avatar
-                                    : "default-avatar.jpg"
-                                }" alt="Ảnh đại diện" class="review-avatar">
+                                    <img src="${
+                                        review.avatar
+                                            ? review.avatar
+                                            : "storage/uploads/icon/an_danh.jpg"
+                                    }" alt="Ảnh đại diện" class="review-avatar">
                                     <p><strong>${review.user_name}</strong></p>
                                     <p class="stars">${stars}</p>
                                 </div>
@@ -30,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                         .join("<hr>");
                 } else {
-                    reviewList.innerHTML = "<p>Chưa có đánh giá nào.</p>";
+                    reviewsElement.innerHTML = "<p>Chưa có đánh giá nào.</p>";
                 }
             })
             .catch((error) => console.error("⛔ Lỗi khi tải đánh giá:", error));

@@ -19,7 +19,7 @@ class TouristSpot extends Model
     public function homestays()
     {
         return $this->belongsToMany(Homestay::class, 'distances', 'tourist_spot_id', 'homestay_id')
-                    ->withPivot('distance')
-                    ->orderBy('distance');
+            ->withPivot('distance')
+            ->orderBy('distance');
     }
 }
