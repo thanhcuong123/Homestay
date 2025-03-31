@@ -1,7 +1,7 @@
 <!-- Overlay -->
 <div id="homestayDetailOverlay" class="overlay"></div>
 <style>
-    #homestayTourists {
+    #homestayTourists, #homestayReviews {
         max-height: 600px;
         /* Giới hạn chiều cao */
         overflow-y: auto;
@@ -36,22 +36,7 @@
         <div id="homestayRooms" class="tab-content"></div>
         <div id="homestayReviews" class="tab-content">
             <h3>Để lại đánh giá</h3>
-            <form id="reviewForm">
-                <input type="hidden" id="reviewHomestayId">
-                <label for="userName">Tên của bạn:</label>
-                <input type="text" id="userName" required>
-                <label for="rating">Chọn đánh giá:</label>
-                <select id="rating" required>
-                    <option value="5">⭐️⭐️⭐️⭐️⭐️ - Tuyệt vời</option>
-                    <option value="4">⭐️⭐️⭐️⭐️ - Tốt</option>
-                    <option value="3">⭐️⭐️⭐️ - Bình thường</option>
-                    <option value="2">⭐️⭐️ - Không tốt</option>
-                    <option value="1">⭐️ - Rất tệ</option>
-                </select>
-                <label for="comment">Nhận xét:</label>
-                <textarea id="comment" required></textarea>
-                <button type="submit">Gửi đánh giá</button>
-            </form>
+
             <h3>Đánh giá từ khách hàng</h3>
             <div id="reviewList"></div>
         </div>

@@ -79,13 +79,13 @@
     display: flex;
     justify-content: space-around;
     padding: 10px 0;
-    border-bottom: 2px solid #ff7b00;
+    border-bottom: 2px solid #f1a600;
 }
 
 .tab-buttons button {
     flex: 1;
     padding: 8px;
-    background: #ff7b00;
+    background: #f1a600;
     border: none;
     color: white;
     font-size: 14px;
@@ -95,7 +95,7 @@
 
 .tab-buttons button:hover,
 .tab-buttons button.active {
-    background: #ff4d00;
+    background: #8f6202;
 }
 
 /* Nội dung tab */

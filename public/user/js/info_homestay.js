@@ -66,12 +66,10 @@ function viewHomestayDetails(homestayId) {
                     .map(
                         (room) => `
                     <div class="room">
-                        <h4>${
-                            room.name
-                        } - giá phòng ${room.price.toLocaleString()} VND</h4>
-                        <p><strong>Số người tối đa:</strong> ${
-                            room.max_guests
-                        } người</p>
+                        <h4>${room.name
+                            } - giá phòng ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${room.max_guests
+                            } người</p>
                         <p><strong>Diện tích:</strong> ${room.area} m²</p>
                         <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
                     </div>
@@ -114,7 +112,11 @@ function viewHomestayDetails(homestayId) {
 
             // ✅ Tab Đánh giá
             reviewsElement.innerHTML = `
-<button id="btnAddReview" style="margin-bottom: 10px; padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 5px;">Thêm đánh giá</button>
+<button id="btnAddReview" style="text-decoration: none;
+                        padding: 5px 10px;
+                        background: #f8b100;
+                        color: #fff;
+                        border-radius: 5px;">Thêm đánh giá</button>
 <div id="reviewForm" style="display: none; margin-bottom: 10px;">
     <textarea id="reviewComment" placeholder="Nhập đánh giá của bạn" rows="3" style="width: 100%;"></textarea>
     <br>
@@ -127,30 +129,33 @@ function viewHomestayDetails(homestayId) {
         <option value="1">⭐</option>
     </select>
     <br>
-    <button id="submitReview" style="margin-top: 10px; padding: 8px 12px; background: #28a745; color: white; border: none; border-radius: 5px;">Gửi đánh giá</button>
+    <button id="submitReview" style="text-decoration: none;
+                        padding: 5px 10px;
+                        background: #f8b100;
+                        color: #fff;
+                        border-radius: 5px;">Gửi đánh giá</button>
 </div>
-${
-    homestay.reviews.length > 0
-        ? homestay.reviews
-              .map((review) => {
-                  let stars = "⭐".repeat(review.rating);
-                  return `
+${homestay.reviews.length > 0
+                    ? homestay.reviews
+                        .map((review) => {
+                            let stars = "⭐".repeat(review.rating);
+                            return `
         <div class="review">
             <div class="review-header">
-                <img src="${
-                    review.avatar || "storage/uploads/icon/an_danh.jpg"
-                }" alt="Ảnh đại diện" class="review-avatar">
+                <img src="${review.avatar || "storage/uploads/icon/an_danh.jpg"
+                                }" alt="Ảnh đại diện" class="review-avatar">
                 <p><strong>${review.user_name}</strong></p>
                 <p class="stars">${stars}</p>
             </div>
             <p>${review.comment}</p>
         </div>
     `;
-              })
-              .join("<hr>")
-        : "<p>Chưa có đánh giá nào.</p>"
-}
+                        })
+                        .join("<hr>")
+                    : "<p>Chưa có đánh giá nào.</p>"
+                }
 `;
+
             document
                 .getElementById("submitReview")
                 .addEventListener("click", function () {
