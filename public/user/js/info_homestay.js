@@ -66,10 +66,12 @@ function viewHomestayDetails(homestayId) {
                     .map(
                         (room) => `
                     <div class="room">
-                        <h4>${room.name
-                            } - giá phòng ${room.price.toLocaleString()} VND</h4>
-                        <p><strong>Số người tối đa:</strong> ${room.max_guests
-                            } người</p>
+                        <h4>${
+                            room.name
+                        } - giá phòng ${room.price.toLocaleString()} VND</h4>
+                        <p><strong>Số người tối đa:</strong> ${
+                            room.max_guests
+                        } người</p>
                         <p><strong>Diện tích:</strong> ${room.area} m²</p>
                         <p><strong>Tiện nghi:</strong> ${room.amenities}</p>
                     </div>
@@ -136,25 +138,27 @@ function viewHomestayDetails(homestayId) {
                         color: #fff;
                         border-radius: 5px;">Gửi đánh giá</button>
 </div>
-${homestay.reviews.length > 0
-                    ? homestay.reviews
-                        .map((review) => {
-                            let stars = "⭐".repeat(review.rating);
-                            return `
+${
+    homestay.reviews.length > 0
+        ? homestay.reviews
+              .map((review) => {
+                  let stars = "⭐".repeat(review.rating);
+                  return `
         <div class="review">
             <div class="review-header">
-                <img src="${review.avatar || "storage/uploads/icon/an_danh.jpg"
-                                }" alt="Ảnh đại diện" class="review-avatar">
+                <img src="${
+                    review.avatar || "storage/uploads/icon/an_danh.jpg"
+                }" alt="Ảnh đại diện" class="review-avatar">
                 <p><strong>${review.user_name}</strong></p>
                 <p class="stars">${stars}</p>
             </div>
             <p>${review.comment}</p>
         </div>
     `;
-                        })
-                        .join("<hr>")
-                    : "<p>Chưa có đánh giá nào.</p>"
-                }
+              })
+              .join("<hr>")
+        : "<p>Chưa có đánh giá nào.</p>"
+}
 `;
 
             document
@@ -214,15 +218,16 @@ ${homestay.reviews.length > 0
                 .getElementById("btnAddReview")
                 .addEventListener("click", function () {
                     let isLoggedIn =
-                        document.getElementById("btnAddReview").dataset
-                            .loggedIn;
+                        document
+                            .querySelector('meta[name="user-auth"]')
+                            .getAttribute("content") === "true";
 
-                    if (isLoggedIn === "true") {
+                    if (isLoggedIn) {
                         document.getElementById("reviewForm").style.display =
                             "block";
                     } else {
                         alert("Bạn cần đăng nhập để đánh giá!");
-                        window.location.href = "/login"; // Chuyển hướng đến trang đăng nhập
+                        window.location.href = "/login";
                     }
                 });
 
