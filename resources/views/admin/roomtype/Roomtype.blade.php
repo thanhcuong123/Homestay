@@ -11,14 +11,17 @@
         /* Định dạng chiều rộng cố định cho cột tiện nghi */
         .tiennghi {
             width: 100px;
-            word-wrap: break-word; /* Đảm bảo nội dung không bị tràn */
-            white-space: normal; /* Cho phép xuống dòng */
-            overflow-wrap: break-word; /* Xuống dòng khi quá dài */
+            word-wrap: break-word;
+            /* Đảm bảo nội dung không bị tràn */
+            white-space: normal;
+            /* Cho phép xuống dòng */
+            overflow-wrap: break-word;
+            /* Xuống dòng khi quá dài */
         }
     </style>
     <div class="table-responsive mt-4">
         <h2 class="text-2xl font-bold mb-4">Danh sách loại phòng Homestay</h2>
-        <a href="{{ route('roomtype.create') }}" class="btn btn-success" style="margin-left:4px">Thêm mới</a>
+        <a href="{{ route('roomtype.create') }}" class="btn btn-success" style="margin-left:4px; margin-bottom:5px">Thêm mới</a>
 
 
         <table class="table table-bordered table-striped table-fixed">
@@ -29,8 +32,8 @@
                     <th>Tên loại</th>
                     <th> Số người</th>
                     <th>Diện tích</th>
-                    <th >Giá</th>
-                    <th class="tiennghi" >Tiện nghi</th>
+                    <th>Giá</th>
+                    <th class="fixed-column text-wrap">Tiện nghi</th>
 
                     <th class="sticky-column">Hành động</th>
                 </tr>
@@ -45,7 +48,7 @@
                     <td>{{ $rooms->max_guests}}</td>
                     <td>{{ $rooms->area }}</td>
                     <td>{{ $rooms->price }}</td>
-                    <td class="tiennghi">{{ $rooms->amenities }}</td>
+                    <td class="fixed-column text-wrap">{{ $rooms->amenities }}</td>
 
                     <td class="sticky-column">
                         <a href="{{ route('roomtype.edit',['id' => $rooms ->id]) }}" class="btn btn-warning btn-sm">Sửa</a>

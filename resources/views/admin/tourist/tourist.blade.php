@@ -10,7 +10,7 @@
     <div class="containers mt-4">
         <div class="d-flex justify-content align-items-center mb-3">
             <h3 class="mb-1">Danh sách Homestay</h3>
-            <a href="{{ route('tourist.create') }}" class="btn btn-success" style="margin-left:4px">Thêm mới</a>
+            <a href="{{ route('tourist.create') }}" class="btn btn-success" style="margin-left:4px; margin-right:10px">Thêm mới</a>
             <a href="{{ route('tourist.mapall') }}" class="btn btn-primary">Xem các điểm du lịch trên bản đồ</a>
 
         </div>

@@ -113,6 +113,7 @@ function viewHomestayDetails(homestayId) {
             // }
 
             // ✅ Tab Đánh giá
+
             reviewsElement.innerHTML = `
 <button id="btnAddReview" style="margin-bottom: 10px; padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 5px;">Thêm đánh giá</button>
 <div id="reviewForm" style="display: none; margin-bottom: 10px;">
@@ -151,9 +152,20 @@ ${
         : "<p>Chưa có đánh giá nào.</p>"
 }
 `;
+
             document
                 .getElementById("submitReview")
                 .addEventListener("click", function () {
+                    let isLoggedIn =
+                        document
+                            .querySelector('meta[name="user-auth"]')
+                            .getAttribute("content") === "true";
+
+                    if (!isLoggedIn) {
+                        alert("Bạn cần đăng nhập để đánh giá!");
+                        return;
+                    }
+
                     let comment =
                         document.getElementById("reviewComment").value;
                     let rating = document.getElementById("reviewRating").value;
@@ -184,7 +196,6 @@ ${
                         .then((data) => {
                             if (data.message) {
                                 alert("Cảm ơn bạn đã đánh giá!");
-
                                 homestay.reviews.push(data.review);
                                 viewHomestayDetails(homestay.id);
                             } else {
@@ -198,8 +209,17 @@ ${
             document
                 .getElementById("btnAddReview")
                 .addEventListener("click", function () {
-                    document.getElementById("reviewForm").style.display =
-                        "block";
+                    let isLoggedIn =
+                        document.getElementById("btnAddReview").dataset
+                            .loggedIn;
+
+                    if (isLoggedIn === "true") {
+                        document.getElementById("reviewForm").style.display =
+                            "block";
+                    } else {
+                        alert("Bạn cần đăng nhập để đánh giá!");
+                        window.location.href = "/login"; // Chuyển hướng đến trang đăng nhập
+                    }
                 });
 
             // loadReviews(homestayId);

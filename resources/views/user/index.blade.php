@@ -3,12 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="user-auth" content="{{ Auth::check() ? 'true' : 'false' }}">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('user/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/info_homestay.css') }}">
     <title>Homestay</title>
+
+
 </head>
 
 <body>

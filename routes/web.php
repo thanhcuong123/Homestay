@@ -17,7 +17,7 @@ use App\Http\Controllers\User\ReviewController;
 
 Route::get('/', function () {
 
-    return view('login');
+    return view('user/index');
 });
 
 
