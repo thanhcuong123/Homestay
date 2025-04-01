@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -19,8 +20,32 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+    public function showFormRegister()
+    {
+        return view('register');
+    }
 
-    // Xử lý đăng nhập
+    // Xử lý đăng ký tài khoản
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'user',
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('home.html')->with('success', 'Đăng ký thành công!');
+    }
+
     public function login(Request $request)
     {
         // Kiểm tra dữ liệu đầu vào

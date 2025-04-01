@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập</title>
+    <title>Đăng ký</title>
     <style>
         body {
             display: flex;
@@ -16,7 +16,7 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        .login-container {
+        .register-container {
             background-color: #ffffff;
             padding: 40px;
             border-radius: 20px;
@@ -26,7 +26,7 @@
             text-align: center;
         }
 
-        .login-container h2 {
+        .register-container h2 {
             margin-bottom: 30px;
             color: #3f7a5c;
         }
@@ -34,22 +34,14 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: left;
         }
 
         .form-group label {
-            display: block;
             margin-bottom: 5px;
             color: #3f7a5c;
             font-weight: 500;
-        }
-
-        .form-group a {
-            align-self: flex-end;
-            margin-top: 10px;
-            color: #eeaeca;
-            font-size: 14px;
         }
 
         .form-group input {
@@ -67,7 +59,7 @@
             border-color: #3f7a5c;
         }
 
-        .login-btn,
+        .register-btn,
         .return-btn {
             width: 100%;
             padding: 15px;
@@ -81,67 +73,66 @@
             margin-top: 10px;
         }
 
-        .return-btn {
-            width: 402px;
-        }
-
-
-        .login-btn:hover,
+        .register-btn:hover,
         .return-btn:hover {
             background-color: #3f7a5c;
         }
 
-        .register-link {
-            margin-top: 20px;
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .login-link {
             display: block;
+            margin-top: 15px;
             color: #00796b;
             text-decoration: none;
             font-weight: 500;
-        }
-
-        .error-message {
-            color: red;
-            margin-bottom: 15px;
         }
     </style>
 </head>
 
 <body>
-    <div class="login-container">
-        <h2>Đăng nhập</h2>
+    <div class="register-container">
+        <h2>Đăng ký tài khoản</h2>
 
-        <form action="{{ route('login') }}" method="POST">
+        <form action="{{ route('register') }}" method="POST">
             @csrf
+
+            <div class="form-group">
+                <label for="name">Họ và Tên:</label>
+                <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required value="{{ old('name') }}">
+                @error('name')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Nhập email" required>
+                <input type="email" id="email" name="email" placeholder="Nhập email" required value="{{ old('email') }}">
                 @error('email')
                 <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
-                <a href="{{ route('register') }}">Chưa có tài khoản? Đăng kí nè ní!</a>
                 @error('password')
                 <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
 
-            @if ($errors->has('login_error'))
-            <div class="alert alert-danger">
-                {{ $errors->first('login_error') }}
+            <div class="form-group">
+                <label for="password_confirmation">Xác nhận mật khẩu:</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" required>
             </div>
-            @endif
 
-            <button type="submit" class="login-btn">Đăng nhập</button>
-
-        </form>
-        <form action="{{ route('home.html') }}" method="GET">
-            <button type="submit" class="return-btn">Thoát</button>
+            <button type="submit" class="register-btn">Đăng ký</button>
         </form>
 
-    </div>
+        <a href="{{ route('login') }}" class="login-link">Đã có tài khoản? Đăng nhập ngay</a>
     </div>
 </body>
 

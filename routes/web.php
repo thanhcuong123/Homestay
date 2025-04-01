@@ -27,7 +27,8 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showFormlogin'])->name('showFormlogin.html');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
+Route::get('/register', [AuthController::class, 'showFormRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 
 // Use vieets trong đây nhe
 Route::middleware('auth')->group(function () {
