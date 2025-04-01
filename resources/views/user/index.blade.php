@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('user/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/info_homestay.css') }}">
+    <link rel="shortcut icon" href="{{ asset('storage/avatars/LOGO-removebg.png') }}" />
     <title>Homestay</title>
 
 

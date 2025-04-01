@@ -24,7 +24,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('admin/css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('storage/avatars/LOGO-removebg.png') }}" />
 </head>
 
 <body>
@@ -32,8 +32,12 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="{{ route('home.html') }}"><img src="{{ asset('admin/images/logo.svg') }}" class="mr-2" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="{{ route('home.html') }}"><img src="{{ asset('admin/images/logo-mini.svg') }}" alt="logo" /></a>
+                <a class="navbar-brand brand-logo mr-5" href="{{ route('home.html') }}"><img src="{{ asset('storage/avatars/LOGO.png') }}" class="mr-2" alt="logo"
+                style="width: 80px;
+                        height: auto;
+                        border-radius: 90px;
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);"
+                    ></a>
             </div>
 
 
