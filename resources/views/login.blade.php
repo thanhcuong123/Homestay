@@ -28,7 +28,7 @@
 
         .login-container h2 {
             margin-bottom: 30px;
-            color: #794300;
+            color: #3f7a5c;
         }
 
         .form-group {
@@ -41,21 +41,21 @@
         .form-group label {
             display: block;
             margin-bottom: 5px;
-            color: #f8b100;
+            color: #3f7a5c;
             font-weight: 500;
         }
 
         .form-group a {
             align-self: flex-end;
             margin-top: 10px;
-            color: #f8b100;
+            color: #eeaeca;
             font-size: 14px;
         }
 
         .form-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #794300;
+            border: 1px solid #eeaeca;
             border-radius: 10px;
             box-sizing: border-box;
             font-size: 16px;
@@ -64,14 +64,14 @@
         }
 
         .form-group input:focus {
-            border-color: #f8b100;
+            border-color: #3f7a5c;
         }
 
         .login-btn,
         .return-btn {
             width: 100%;
             padding: 15px;
-            background-color: #f8b100;
+            background-color: #69ae8b;
             color: #fff;
             border: none;
             border-radius: 10px;
@@ -88,7 +88,7 @@
 
         .login-btn:hover,
         .return-btn:hover {
-            background-color: #f1daa1;
+            background-color: #3f7a5c;
         }
 
         .register-link {

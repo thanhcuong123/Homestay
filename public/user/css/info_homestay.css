@@ -1,3 +1,6 @@
+/* màu chính :#69ae8b  */
+/* màu hover: #3f7a5c */
+/* màu viền: #eeaeca */
 /* Overlay background */
 #homestayDetailOverlay {
     position: fixed;
@@ -54,7 +57,7 @@
 #homestayDetailPopup h2 {
     margin-top: 0;
     font-size: 22px;
-    color: #ff7b00;
+    color: #69ae8b;
     text-align: center;
 }
 
@@ -79,13 +82,13 @@
     display: flex;
     justify-content: space-around;
     padding: 10px 0;
-    border-bottom: 2px solid #f1a600;
+    border-bottom: 2px solid #69ae8b;
 }
 
 .tab-buttons button {
     flex: 1;
     padding: 8px;
-    background: #f1a600;
+    background: #69ae8b;
     border: none;
     color: white;
     font-size: 14px;
@@ -95,7 +98,7 @@
 
 .tab-buttons button:hover,
 .tab-buttons button.active {
-    background: #8f6202;
+    background: #3f7a5c;
 }
 
 /* Nội dung tab */

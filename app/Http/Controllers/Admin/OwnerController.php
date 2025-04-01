@@ -41,6 +41,28 @@ class OwnerController extends Controller
         $owner = Owner::find($id);
         return view('admin.owner.update', compact('owner'));
     }
+    public function update(Request $request, $id)
+    {
+        $owner = Owner::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'gender' => 'required|in:Nam,Nữ',
+            'phone' => 'required|digits:10',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data = $request->except('avatar');
+
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $avatarPath;
+        }
+
+        $owner->update($data);
+
+        return redirect()->route('admin.owner.index')->with('success', 'Cập nhật chủ sở hữu thành công!');
+    }
     public function destroy($id)
     {
         Owner::find($id)->delete();

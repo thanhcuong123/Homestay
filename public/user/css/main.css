@@ -1,3 +1,6 @@
+/* màu chính : #69ae8b  */
+/* màu hover: #3f7a5c */
+/* màu viền: #eeaeca */
 * {
     margin: 0;
     padding: 0;
@@ -37,14 +40,14 @@ body {
 .login-link a {
     text-decoration: none;
     padding: 10px 15px;
-    background: #f8b100;
+    background: #69ae8b;
     color: #fff;
     border-radius: 5px;
 }
 
 .search-box button,
 .login-link a:hover {
-    background: #f1a600;
+    background: #3f7a5c;
 }
 
 /*pop up_search*/
@@ -68,7 +71,7 @@ body {
     height: 90%;
     background: #fffbe7;
     padding: 20px;
-    border-right: 2px solid #ff7b00;
+    border-right: 2px solid #eeaeca;
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
     z-index: 9999;
     display: none;
@@ -85,7 +88,7 @@ body {
 #resultsPopup h2 {
     margin-top: 0;
     font-size: 24px;
-    color: #ff7b00;
+    color: #69ae8b;
     text-align: center;
 }
 
@@ -108,7 +111,7 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     padding: 10px;
-    border-top: 1px solid #ff7b00;
+    border-top: 1px solid #eeaeca;
 }
 
 /* Hiệu ứng trượt vô */

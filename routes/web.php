@@ -6,11 +6,13 @@ use App\Http\Controllers\User\GetInfoHomestayController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
+
 use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\Admin\OwnerController;
 use Illuminate\Support\Facades\View;
 use App\Http\controllers\Admin\Roomcontroller;
 use App\Http\controllers\Admin\TourisSpotsController;
+use App\Http\Controllers\Admin\User_adminController;
 // use App\Http\controllers\Admin\MapController;
 use App\Http\Controllers\User\MapController;
 use App\Http\Controllers\User\ReviewController;
@@ -50,6 +52,13 @@ Route::post('/reviews', [ReviewController::class, 'store']);
 
 // Route cho admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    //User
+    Route::get('/admin/User',action: [User_adminController::class, 'index'])->name('admin.user.index');
+    Route::get('/admin/User/create',action: [User_adminController::class, 'create'])->name('admin.user.create');
+    Route::post('/admin/User/store', [User_adminController::class,'store'])->name('admin.user.store');
+    Route::get('/admin/User/edit/{id}',[User_adminController::class, 'edit'])->name('admin.user.edit');
+    Route::put('/admin/User/update/{id}', [User_adminController::class, 'update'])->name('admin.user.update');
+    Route::delete('admin/User/destroy/{id}', [User_adminController::class, 'destroy'])->name('admin.user.destroy');
 
     //homestay
     Route::get('/admin/homestay', [HomestayController::class, 'index'])->name('admin.homestay.index');
@@ -67,6 +76,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/owner/store', [OwnerController::class, 'store'])->name('admin.owner.store');
     Route::delete('admin/owner/destroy/{id}', [OwnerController::class, 'destroy'])->name('owner.destroy');
     Route::get('admin/owner/edit/{id}', [OwnerController::class, 'edit'])->name('owner.edit');
+    Route::put('/admin/owner/{id}', [OwnerController::class, 'update'])->name('admin.owner.update');
     Route::post('admin/owner/update', [OwnerController::class, 'update'])->name('owner.update');
 
     //Roomtype
