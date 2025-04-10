@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home.html')->with('success', 'Đăng ký thành công!');
+        return redirect()->route('login')->with('success', 'Đăng ký thành công!');
     }
 
     public function login(Request $request)
