@@ -39,7 +39,6 @@ DB_USERNAME=root
 
 DB_PASSWORD=
 
-
 - Chạy lệnh để add hình 
 
 php artisan storage:link
